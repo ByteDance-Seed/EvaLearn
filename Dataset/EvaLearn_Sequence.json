@@ -1,0 +1,2368 @@
+[
+  {
+    "sequence_id": 1,
+    "type": "Extraction",
+    "question_ids": [
+      252,
+      258,
+      297,
+      263,
+      245,
+      273,
+      241
+    ]
+  },
+  {
+    "sequence_id": 2,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      355,
+      317,
+      305,
+      357,
+      336,
+      325,
+      349
+    ]
+  },
+  {
+    "sequence_id": 3,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      627,
+      623,
+      592,
+      603,
+      594,
+      602,
+      633
+    ]
+  },
+  {
+    "sequence_id": 4,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      99,
+      149,
+      100,
+      32,
+      129,
+      96,
+      27
+    ]
+  },
+  {
+    "sequence_id": 5,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      43,
+      135,
+      80,
+      16,
+      167,
+      112,
+      62
+    ]
+  },
+  {
+    "sequence_id": 6,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      66,
+      9,
+      50,
+      105,
+      3,
+      13,
+      92
+    ]
+  },
+  {
+    "sequence_id": 7,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      586,
+      588,
+      575,
+      537,
+      581,
+      572,
+      536
+    ]
+  },
+  {
+    "sequence_id": 8,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      346,
+      341,
+      310,
+      312,
+      358,
+      307,
+      301
+    ]
+  },
+  {
+    "sequence_id": 9,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      476,
+      442,
+      461,
+      422,
+      464,
+      463,
+      459
+    ]
+  },
+  {
+    "sequence_id": 10,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      348,
+      329,
+      344,
+      340,
+      317,
+      326,
+      347
+    ]
+  },
+  {
+    "sequence_id": 11,
+    "type": "Summarization",
+    "question_ids": [
+      218,
+      206,
+      214,
+      236,
+      213,
+      229,
+      199
+    ]
+  },
+  {
+    "sequence_id": 12,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      38,
+      54,
+      153,
+      40,
+      124,
+      106,
+      166
+    ]
+  },
+  {
+    "sequence_id": 13,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      559,
+      555,
+      548,
+      582,
+      539,
+      538,
+      529
+    ]
+  },
+  {
+    "sequence_id": 14,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      103,
+      88,
+      171,
+      70,
+      25,
+      111,
+      97
+    ]
+  },
+  {
+    "sequence_id": 15,
+    "type": "Classification",
+    "question_ids": [
+      495,
+      508,
+      481,
+      482,
+      485,
+      507,
+      492
+    ]
+  },
+  {
+    "sequence_id": 16,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      77,
+      78,
+      89,
+      69,
+      125,
+      146,
+      82
+    ]
+  },
+  {
+    "sequence_id": 17,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      94,
+      66,
+      127,
+      137,
+      15,
+      28,
+      147
+    ]
+  },
+  {
+    "sequence_id": 18,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      409,
+      416,
+      380,
+      378,
+      401,
+      420,
+      385
+    ]
+  },
+  {
+    "sequence_id": 19,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      621,
+      614,
+      639,
+      616,
+      630,
+      620,
+      596
+    ]
+  },
+  {
+    "sequence_id": 20,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      28,
+      4,
+      17,
+      85,
+      55,
+      5,
+      136
+    ]
+  },
+  {
+    "sequence_id": 21,
+    "type": "Classification",
+    "question_ids": [
+      512,
+      484,
+      505,
+      523,
+      509,
+      487,
+      524
+    ]
+  },
+  {
+    "sequence_id": 22,
+    "type": "Classification",
+    "question_ids": [
+      488,
+      517,
+      497,
+      500,
+      528,
+      513,
+      518
+    ]
+  },
+  {
+    "sequence_id": 23,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      335,
+      316,
+      332,
+      360,
+      318,
+      350,
+      334
+    ]
+  },
+  {
+    "sequence_id": 24,
+    "type": "Extraction",
+    "question_ids": [
+      261,
+      251,
+      249,
+      270,
+      267,
+      290,
+      279
+    ]
+  },
+  {
+    "sequence_id": 25,
+    "type": "Summarization",
+    "question_ids": [
+      196,
+      185,
+      207,
+      181,
+      233,
+      187,
+      216
+    ]
+  },
+  {
+    "sequence_id": 26,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      435,
+      443,
+      451,
+      429,
+      466,
+      442,
+      458
+    ]
+  },
+  {
+    "sequence_id": 27,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      21,
+      163,
+      35,
+      58,
+      37,
+      52,
+      90
+    ]
+  },
+  {
+    "sequence_id": 28,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      647,
+      637,
+      591,
+      625,
+      597,
+      595,
+      609
+    ]
+  },
+  {
+    "sequence_id": 29,
+    "type": "Summarization",
+    "question_ids": [
+      191,
+      232,
+      204,
+      202,
+      208,
+      239,
+      223
+    ]
+  },
+  {
+    "sequence_id": 30,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      9,
+      74,
+      126,
+      10,
+      60,
+      136,
+      4
+    ]
+  },
+  {
+    "sequence_id": 31,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      348,
+      331,
+      302,
+      316,
+      322,
+      306,
+      332
+    ]
+  },
+  {
+    "sequence_id": 32,
+    "type": "Summarization",
+    "question_ids": [
+      193,
+      190,
+      198,
+      220,
+      197,
+      235,
+      211
+    ]
+  },
+  {
+    "sequence_id": 33,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      471,
+      470,
+      430,
+      421,
+      456,
+      440,
+      476
+    ]
+  },
+  {
+    "sequence_id": 34,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      51,
+      143,
+      13,
+      173,
+      73,
+      113,
+      118
+    ]
+  },
+  {
+    "sequence_id": 35,
+    "type": "Extraction",
+    "question_ids": [
+      245,
+      252,
+      255,
+      269,
+      270,
+      243,
+      262
+    ]
+  },
+  {
+    "sequence_id": 36,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      433,
+      453,
+      463,
+      475,
+      472,
+      431,
+      449
+    ]
+  },
+  {
+    "sequence_id": 37,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      581,
+      540,
+      587,
+      563,
+      554,
+      582,
+      537
+    ]
+  },
+  {
+    "sequence_id": 38,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      315,
+      306,
+      345,
+      327,
+      309,
+      343,
+      339
+    ]
+  },
+  {
+    "sequence_id": 39,
+    "type": "Summarization",
+    "question_ids": [
+      213,
+      222,
+      186,
+      196,
+      205,
+      215,
+      221
+    ]
+  },
+  {
+    "sequence_id": 40,
+    "type": "Extraction",
+    "question_ids": [
+      275,
+      273,
+      272,
+      283,
+      282,
+      288,
+      293
+    ]
+  },
+  {
+    "sequence_id": 41,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      387,
+      382,
+      369,
+      381,
+      403,
+      405,
+      410
+    ]
+  },
+  {
+    "sequence_id": 42,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      155,
+      172,
+      178,
+      26,
+      176,
+      49,
+      33
+    ]
+  },
+  {
+    "sequence_id": 43,
+    "type": "Classification",
+    "question_ids": [
+      516,
+      525,
+      527,
+      519,
+      524,
+      499,
+      521
+    ]
+  },
+  {
+    "sequence_id": 44,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      577,
+      534,
+      543,
+      530,
+      578,
+      561,
+      562
+    ]
+  },
+  {
+    "sequence_id": 45,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      398,
+      374,
+      411,
+      370,
+      386,
+      418,
+      399
+    ]
+  },
+  {
+    "sequence_id": 46,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      452,
+      462,
+      423,
+      447,
+      426,
+      439,
+      434
+    ]
+  },
+  {
+    "sequence_id": 47,
+    "type": "Classification",
+    "question_ids": [
+      502,
+      528,
+      516,
+      485,
+      500,
+      504,
+      489
+    ]
+  },
+  {
+    "sequence_id": 48,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      389,
+      376,
+      375,
+      400,
+      403,
+      394,
+      388
+    ]
+  },
+  {
+    "sequence_id": 49,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      429,
+      480,
+      478,
+      474,
+      473,
+      469,
+      435
+    ]
+  },
+  {
+    "sequence_id": 50,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      629,
+      597,
+      615,
+      638,
+      600,
+      643,
+      644
+    ]
+  },
+  {
+    "sequence_id": 51,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      557,
+      542,
+      546,
+      550,
+      574,
+      554,
+      585
+    ]
+  },
+  {
+    "sequence_id": 52,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      115,
+      24,
+      67,
+      36,
+      96,
+      79,
+      172
+    ]
+  },
+  {
+    "sequence_id": 53,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      471,
+      449,
+      434,
+      466,
+      426,
+      457,
+      424
+    ]
+  },
+  {
+    "sequence_id": 54,
+    "type": "Summarization",
+    "question_ids": [
+      201,
+      184,
+      225,
+      183,
+      238,
+      208,
+      216
+    ]
+  },
+  {
+    "sequence_id": 55,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      418,
+      369,
+      381,
+      399,
+      419,
+      390,
+      393
+    ]
+  },
+  {
+    "sequence_id": 56,
+    "type": "Extraction",
+    "question_ids": [
+      259,
+      256,
+      284,
+      269,
+      298,
+      286,
+      253
+    ]
+  },
+  {
+    "sequence_id": 57,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      118,
+      171,
+      29,
+      19,
+      5,
+      104,
+      164
+    ]
+  },
+  {
+    "sequence_id": 58,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      390,
+      376,
+      364,
+      415,
+      409,
+      368,
+      366
+    ]
+  },
+  {
+    "sequence_id": 59,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      94,
+      61,
+      130,
+      161,
+      145,
+      31,
+      151
+    ]
+  },
+  {
+    "sequence_id": 60,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      444,
+      436,
+      454,
+      450,
+      465,
+      480,
+      428
+    ]
+  },
+  {
+    "sequence_id": 61,
+    "type": "Extraction",
+    "question_ids": [
+      292,
+      261,
+      293,
+      268,
+      248,
+      256,
+      283
+    ]
+  },
+  {
+    "sequence_id": 62,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      575,
+      560,
+      551,
+      555,
+      543,
+      562,
+      584
+    ]
+  },
+  {
+    "sequence_id": 63,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      441,
+      438,
+      453,
+      450,
+      456,
+      444,
+      440
+    ]
+  },
+  {
+    "sequence_id": 64,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      152,
+      180,
+      123,
+      81,
+      47,
+      162,
+      48
+    ]
+  },
+  {
+    "sequence_id": 65,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      545,
+      531,
+      548,
+      585,
+      583,
+      559,
+      572
+    ]
+  },
+  {
+    "sequence_id": 66,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      361,
+      397,
+      420,
+      388,
+      379,
+      395,
+      417
+    ]
+  },
+  {
+    "sequence_id": 67,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      158,
+      46,
+      141,
+      14,
+      47,
+      64,
+      168
+    ]
+  },
+  {
+    "sequence_id": 68,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      373,
+      372,
+      380,
+      371,
+      396,
+      400,
+      392
+    ]
+  },
+  {
+    "sequence_id": 69,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      302,
+      328,
+      321,
+      308,
+      337,
+      313,
+      320
+    ]
+  },
+  {
+    "sequence_id": 70,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      42,
+      72,
+      84,
+      124,
+      116,
+      169,
+      77
+    ]
+  },
+  {
+    "sequence_id": 71,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      179,
+      159,
+      154,
+      69,
+      91,
+      73,
+      7
+    ]
+  },
+  {
+    "sequence_id": 72,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      23,
+      180,
+      44,
+      174,
+      71,
+      48,
+      67
+    ]
+  },
+  {
+    "sequence_id": 73,
+    "type": "Classification",
+    "question_ids": [
+      483,
+      494,
+      486,
+      515,
+      521,
+      511,
+      513
+    ]
+  },
+  {
+    "sequence_id": 74,
+    "type": "Extraction",
+    "question_ids": [
+      276,
+      295,
+      248,
+      260,
+      257,
+      297,
+      258
+    ]
+  },
+  {
+    "sequence_id": 75,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      7,
+      147,
+      127,
+      10,
+      80,
+      39,
+      165
+    ]
+  },
+  {
+    "sequence_id": 76,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      109,
+      121,
+      91,
+      22,
+      19,
+      160,
+      93
+    ]
+  },
+  {
+    "sequence_id": 77,
+    "type": "Summarization",
+    "question_ids": [
+      206,
+      234,
+      193,
+      223,
+      203,
+      232,
+      199
+    ]
+  },
+  {
+    "sequence_id": 78,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      445,
+      428,
+      451,
+      458,
+      467,
+      437,
+      431
+    ]
+  },
+  {
+    "sequence_id": 79,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      384,
+      370,
+      415,
+      412,
+      383,
+      365,
+      372
+    ]
+  },
+  {
+    "sequence_id": 80,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      598,
+      646,
+      623,
+      634,
+      613,
+      621,
+      627
+    ]
+  },
+  {
+    "sequence_id": 81,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      95,
+      42,
+      65,
+      152,
+      72,
+      63,
+      148
+    ]
+  },
+  {
+    "sequence_id": 82,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      414,
+      361,
+      368,
+      405,
+      398,
+      362,
+      402
+    ]
+  },
+  {
+    "sequence_id": 83,
+    "type": "Classification",
+    "question_ids": [
+      505,
+      484,
+      489,
+      498,
+      511,
+      514,
+      520
+    ]
+  },
+  {
+    "sequence_id": 84,
+    "type": "Extraction",
+    "question_ids": [
+      246,
+      287,
+      277,
+      294,
+      295,
+      247,
+      244
+    ]
+  },
+  {
+    "sequence_id": 85,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      59,
+      134,
+      3,
+      17,
+      46,
+      52,
+      54
+    ]
+  },
+  {
+    "sequence_id": 86,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      596,
+      631,
+      628,
+      602,
+      608,
+      603,
+      614
+    ]
+  },
+  {
+    "sequence_id": 87,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      170,
+      119,
+      86,
+      33,
+      16,
+      140,
+      81
+    ]
+  },
+  {
+    "sequence_id": 88,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      40,
+      176,
+      55,
+      109,
+      8,
+      175,
+      138
+    ]
+  },
+  {
+    "sequence_id": 89,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      567,
+      569,
+      535,
+      573,
+      540,
+      566,
+      580
+    ]
+  },
+  {
+    "sequence_id": 90,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      58,
+      126,
+      159,
+      74,
+      128,
+      120,
+      110
+    ]
+  },
+  {
+    "sequence_id": 91,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      617,
+      626,
+      631,
+      600,
+      607,
+      599,
+      612
+    ]
+  },
+  {
+    "sequence_id": 92,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      624,
+      608,
+      601,
+      606,
+      618,
+      629,
+      635
+    ]
+  },
+  {
+    "sequence_id": 93,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      636,
+      632,
+      642,
+      611,
+      634,
+      615,
+      628
+    ]
+  },
+  {
+    "sequence_id": 94,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      132,
+      137,
+      12,
+      8,
+      112,
+      34,
+      117
+    ]
+  },
+  {
+    "sequence_id": 95,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      310,
+      352,
+      313,
+      330,
+      340,
+      303,
+      314
+    ]
+  },
+  {
+    "sequence_id": 96,
+    "type": "Summarization",
+    "question_ids": [
+      231,
+      203,
+      188,
+      184,
+      225,
+      233,
+      194
+    ]
+  },
+  {
+    "sequence_id": 97,
+    "type": "Summarization",
+    "question_ids": [
+      189,
+      239,
+      190,
+      181,
+      197,
+      191,
+      240
+    ]
+  },
+  {
+    "sequence_id": 98,
+    "type": "Extraction",
+    "question_ids": [
+      284,
+      266,
+      247,
+      274,
+      286,
+      299,
+      250
+    ]
+  },
+  {
+    "sequence_id": 99,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      545,
+      570,
+      587,
+      553,
+      573,
+      565,
+      564
+    ]
+  },
+  {
+    "sequence_id": 100,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      142,
+      162,
+      138,
+      144,
+      83,
+      20,
+      143
+    ]
+  },
+  {
+    "sequence_id": 101,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      163,
+      123,
+      57,
+      154,
+      18,
+      167,
+      68
+    ]
+  },
+  {
+    "sequence_id": 102,
+    "type": "Extraction",
+    "question_ids": [
+      289,
+      290,
+      249,
+      254,
+      281,
+      278,
+      296
+    ]
+  },
+  {
+    "sequence_id": 103,
+    "type": "Classification",
+    "question_ids": [
+      523,
+      487,
+      522,
+      483,
+      515,
+      526,
+      491
+    ]
+  },
+  {
+    "sequence_id": 104,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      622,
+      633,
+      609,
+      617,
+      601,
+      618,
+      647
+    ]
+  },
+  {
+    "sequence_id": 105,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      120,
+      160,
+      130,
+      39,
+      148,
+      165,
+      50
+    ]
+  },
+  {
+    "sequence_id": 106,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      448,
+      474,
+      427,
+      469,
+      430,
+      424,
+      432
+    ]
+  },
+  {
+    "sequence_id": 107,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      330,
+      338,
+      351,
+      353,
+      354,
+      324,
+      345
+    ]
+  },
+  {
+    "sequence_id": 108,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      155,
+      103,
+      113,
+      11,
+      144,
+      158,
+      85
+    ]
+  },
+  {
+    "sequence_id": 109,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      2,
+      51,
+      128,
+      173,
+      22,
+      1,
+      76
+    ]
+  },
+  {
+    "sequence_id": 110,
+    "type": "Summarization",
+    "question_ids": [
+      227,
+      235,
+      214,
+      212,
+      219,
+      211,
+      218
+    ]
+  },
+  {
+    "sequence_id": 111,
+    "type": "Classification",
+    "question_ids": [
+      509,
+      501,
+      490,
+      493,
+      506,
+      502,
+      510
+    ]
+  },
+  {
+    "sequence_id": 112,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      174,
+      92,
+      121,
+      25,
+      110,
+      102,
+      86
+    ]
+  },
+  {
+    "sequence_id": 113,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      315,
+      351,
+      323,
+      334,
+      341,
+      325,
+      321
+    ]
+  },
+  {
+    "sequence_id": 114,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      157,
+      49,
+      93,
+      14,
+      150,
+      106,
+      65
+    ]
+  },
+  {
+    "sequence_id": 115,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      648,
+      641,
+      638,
+      589,
+      622,
+      645,
+      643
+    ]
+  },
+  {
+    "sequence_id": 116,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      412,
+      391,
+      406,
+      404,
+      402,
+      414,
+      413
+    ]
+  },
+  {
+    "sequence_id": 117,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      433,
+      422,
+      460,
+      443,
+      473,
+      445,
+      459
+    ]
+  },
+  {
+    "sequence_id": 118,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      410,
+      397,
+      404,
+      408,
+      407,
+      413,
+      374
+    ]
+  },
+  {
+    "sequence_id": 119,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      353,
+      326,
+      305,
+      319,
+      301,
+      309,
+      350
+    ]
+  },
+  {
+    "sequence_id": 120,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      529,
+      564,
+      566,
+      539,
+      530,
+      576,
+      535
+    ]
+  },
+  {
+    "sequence_id": 121,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      470,
+      460,
+      421,
+      447,
+      446,
+      423,
+      454
+    ]
+  },
+  {
+    "sequence_id": 122,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      386,
+      382,
+      366,
+      387,
+      417,
+      364,
+      367
+    ]
+  },
+  {
+    "sequence_id": 123,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      598,
+      605,
+      593,
+      604,
+      610,
+      619,
+      640
+    ]
+  },
+  {
+    "sequence_id": 124,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      648,
+      590,
+      595,
+      646,
+      593,
+      637,
+      605
+    ]
+  },
+  {
+    "sequence_id": 125,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      119,
+      125,
+      37,
+      23,
+      178,
+      12,
+      57
+    ]
+  },
+  {
+    "sequence_id": 126,
+    "type": "Extraction",
+    "question_ids": [
+      276,
+      296,
+      266,
+      288,
+      271,
+      262,
+      299
+    ]
+  },
+  {
+    "sequence_id": 127,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      87,
+      133,
+      60,
+      164,
+      59,
+      134,
+      135
+    ]
+  },
+  {
+    "sequence_id": 128,
+    "type": "Summarization",
+    "question_ids": [
+      228,
+      210,
+      200,
+      236,
+      187,
+      237,
+      186
+    ]
+  },
+  {
+    "sequence_id": 129,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      641,
+      604,
+      599,
+      589,
+      630,
+      610,
+      644
+    ]
+  },
+  {
+    "sequence_id": 130,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      35,
+      45,
+      139,
+      78,
+      131,
+      83,
+      153
+    ]
+  },
+  {
+    "sequence_id": 131,
+    "type": "Summarization",
+    "question_ids": [
+      189,
+      234,
+      238,
+      227,
+      240,
+      192,
+      212
+    ]
+  },
+  {
+    "sequence_id": 132,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      541,
+      536,
+      588,
+      570,
+      565,
+      533,
+      552
+    ]
+  },
+  {
+    "sequence_id": 133,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      20,
+      146,
+      44,
+      99,
+      108,
+      87,
+      18
+    ]
+  },
+  {
+    "sequence_id": 134,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      320,
+      335,
+      342,
+      327,
+      304,
+      329,
+      357
+    ]
+  },
+  {
+    "sequence_id": 135,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      560,
+      571,
+      541,
+      532,
+      534,
+      531,
+      568
+    ]
+  },
+  {
+    "sequence_id": 136,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      304,
+      322,
+      342,
+      359,
+      323,
+      314,
+      333
+    ]
+  },
+  {
+    "sequence_id": 137,
+    "type": "Extraction",
+    "question_ids": [
+      279,
+      291,
+      300,
+      265,
+      263,
+      251,
+      298
+    ]
+  },
+  {
+    "sequence_id": 138,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      308,
+      347,
+      343,
+      349,
+      324,
+      307,
+      339
+    ]
+  },
+  {
+    "sequence_id": 139,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      355,
+      333,
+      356,
+      337,
+      358,
+      346,
+      344
+    ]
+  },
+  {
+    "sequence_id": 140,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      104,
+      131,
+      101,
+      62,
+      150,
+      56,
+      157
+    ]
+  },
+  {
+    "sequence_id": 141,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      553,
+      579,
+      571,
+      558,
+      550,
+      538,
+      557
+    ]
+  },
+  {
+    "sequence_id": 142,
+    "type": "Classification",
+    "question_ids": [
+      514,
+      482,
+      519,
+      486,
+      496,
+      518,
+      499
+    ]
+  },
+  {
+    "sequence_id": 143,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      169,
+      102,
+      75,
+      156,
+      98,
+      29,
+      114
+    ]
+  },
+  {
+    "sequence_id": 144,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      34,
+      97,
+      26,
+      71,
+      111,
+      114,
+      129
+    ]
+  },
+  {
+    "sequence_id": 145,
+    "type": "Classification",
+    "question_ids": [
+      501,
+      495,
+      497,
+      494,
+      503,
+      527,
+      520
+    ]
+  },
+  {
+    "sequence_id": 146,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      68,
+      133,
+      141,
+      56,
+      98,
+      177,
+      89
+    ]
+  },
+  {
+    "sequence_id": 147,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      375,
+      393,
+      416,
+      384,
+      407,
+      389,
+      406
+    ]
+  },
+  {
+    "sequence_id": 148,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      116,
+      1,
+      107,
+      11,
+      84,
+      6,
+      139
+    ]
+  },
+  {
+    "sequence_id": 149,
+    "type": "Extraction",
+    "question_ids": [
+      280,
+      264,
+      268,
+      277,
+      259,
+      246,
+      253
+    ]
+  },
+  {
+    "sequence_id": 150,
+    "type": "Extraction",
+    "question_ids": [
+      243,
+      254,
+      265,
+      274,
+      278,
+      255,
+      280
+    ]
+  },
+  {
+    "sequence_id": 151,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      448,
+      427,
+      425,
+      472,
+      452,
+      462,
+      477
+    ]
+  },
+  {
+    "sequence_id": 152,
+    "type": "Extraction",
+    "question_ids": [
+      242,
+      244,
+      271,
+      285,
+      294,
+      292,
+      267
+    ]
+  },
+  {
+    "sequence_id": 153,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      367,
+      408,
+      396,
+      401,
+      419,
+      378,
+      362
+    ]
+  },
+  {
+    "sequence_id": 154,
+    "type": "Classification",
+    "question_ids": [
+      490,
+      491,
+      526,
+      504,
+      506,
+      525,
+      512
+    ]
+  },
+  {
+    "sequence_id": 155,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      82,
+      61,
+      156,
+      100,
+      149,
+      63,
+      151
+    ]
+  },
+  {
+    "sequence_id": 156,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      613,
+      616,
+      592,
+      591,
+      594,
+      619,
+      607
+    ]
+  },
+  {
+    "sequence_id": 157,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      624,
+      606,
+      636,
+      626,
+      590,
+      625,
+      620
+    ]
+  },
+  {
+    "sequence_id": 158,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      392,
+      377,
+      395,
+      385,
+      365,
+      394,
+      363
+    ]
+  },
+  {
+    "sequence_id": 159,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      549,
+      576,
+      586,
+      583,
+      551,
+      556,
+      547
+    ]
+  },
+  {
+    "sequence_id": 160,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      312,
+      318,
+      338,
+      360,
+      359,
+      311,
+      328
+    ]
+  },
+  {
+    "sequence_id": 161,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      2,
+      15,
+      24,
+      53,
+      108,
+      45,
+      179
+    ]
+  },
+  {
+    "sequence_id": 162,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      552,
+      558,
+      584,
+      542,
+      563,
+      533,
+      579
+    ]
+  },
+  {
+    "sequence_id": 163,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      438,
+      446,
+      479,
+      461,
+      437,
+      478,
+      467
+    ]
+  },
+  {
+    "sequence_id": 164,
+    "type": "Sequential Reasoning",
+    "question_ids": [
+      363,
+      377,
+      373,
+      391,
+      371,
+      411,
+      379
+    ]
+  },
+  {
+    "sequence_id": 165,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      140,
+      64,
+      95,
+      53,
+      38,
+      170,
+      31
+    ]
+  },
+  {
+    "sequence_id": 166,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      556,
+      578,
+      532,
+      546,
+      568,
+      569,
+      549
+    ]
+  },
+  {
+    "sequence_id": 167,
+    "type": "Summarization",
+    "question_ids": [
+      200,
+      192,
+      195,
+      185,
+      194,
+      209,
+      182
+    ]
+  },
+  {
+    "sequence_id": 168,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      331,
+      336,
+      311,
+      303,
+      354,
+      352,
+      319
+    ]
+  },
+  {
+    "sequence_id": 169,
+    "type": "Summarization",
+    "question_ids": [
+      230,
+      188,
+      204,
+      237,
+      198,
+      220,
+      202
+    ]
+  },
+  {
+    "sequence_id": 170,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      27,
+      132,
+      122,
+      107,
+      101,
+      75,
+      166
+    ]
+  },
+  {
+    "sequence_id": 171,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      41,
+      21,
+      6,
+      32,
+      161,
+      70,
+      88
+    ]
+  },
+  {
+    "sequence_id": 172,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      436,
+      475,
+      432,
+      468,
+      479,
+      455,
+      465
+    ]
+  },
+  {
+    "sequence_id": 173,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      642,
+      645,
+      640,
+      639,
+      612,
+      632,
+      635
+    ]
+  },
+  {
+    "sequence_id": 174,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      561,
+      547,
+      574,
+      580,
+      544,
+      577,
+      567
+    ]
+  },
+  {
+    "sequence_id": 175,
+    "type": "Extraction",
+    "question_ids": [
+      242,
+      281,
+      264,
+      260,
+      300,
+      241,
+      289
+    ]
+  },
+  {
+    "sequence_id": 176,
+    "type": "Summarization",
+    "question_ids": [
+      207,
+      228,
+      217,
+      226,
+      210,
+      224,
+      231
+    ]
+  },
+  {
+    "sequence_id": 177,
+    "type": "Summarization",
+    "question_ids": [
+      209,
+      230,
+      201,
+      221,
+      229,
+      195,
+      219
+    ]
+  },
+  {
+    "sequence_id": 178,
+    "type": "Mathematical Reasoning",
+    "question_ids": [
+      464,
+      468,
+      441,
+      439,
+      425,
+      457,
+      477
+    ]
+  },
+  {
+    "sequence_id": 179,
+    "type": "Classification",
+    "question_ids": [
+      481,
+      503,
+      493,
+      522,
+      498,
+      508,
+      488
+    ]
+  },
+  {
+    "sequence_id": 180,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      43,
+      41,
+      115,
+      36,
+      175,
+      30,
+      122
+    ]
+  },
+  {
+    "sequence_id": 181,
+    "type": "Logical Reasoning",
+    "question_ids": [
+      105,
+      145,
+      168,
+      117,
+      90,
+      30,
+      142
+    ]
+  },
+  {
+    "sequence_id": 182,
+    "type": "Extraction",
+    "question_ids": [
+      282,
+      285,
+      257,
+      287,
+      275,
+      250,
+      291
+    ]
+  }
+]
