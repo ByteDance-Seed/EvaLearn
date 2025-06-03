@@ -1,7 +1,6 @@
-httpx==0.28.1
 numpy==2.2.6
-openai==1.81.0
+openai==1.83.0
 pandas==2.2.3
-pydantic==2.11.4
-python-dotenv==1.1.0
+pydantic==2.11.5
+scikit_learn==1.6.1
 tqdm==4.67.1

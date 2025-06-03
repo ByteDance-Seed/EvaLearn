@@ -9,14 +9,16 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 [![Paper](https://img.shields.io/badge/Paper-Arxiv-blue.svg?style=for-the-badge)](./EvaLearn-paper.pdf)
 [![Code License](https://img.shields.io/badge/Code_License-Apache_2.0-yellow.svg?style=for-the-badge)](./LICENSE)
 [![Data License](https://img.shields.io/badge/Data_License-Apache_2.0-red.svg?style=for-the-badge)](./DATA_LICENSE)
+
 </div>
 
 ## 📚 Overview
-EvaLearn is a pioneering benchmark designed to evaluate large language models (LLMs) on their learning capability and efficiency in challenging tasks. 
 
-EvaLearn contains 648 challenging problems across six task types, grouped into 182 sequences, each sequence dedicated to one task type. 
+EvaLearn is a pioneering benchmark designed to evaluate large language models (LLMs) on their learning capability and efficiency in challenging tasks.
 
-Diverging from most existing benchmarks that evaluate models in parallel, EvaLearn requires models to solve problems sequentially, allowing them to leverage the experience gained from previous solutions. 
+EvaLearn contains 648 challenging problems across six task types, grouped into 182 sequences, each sequence dedicated to one task type.
+
+Diverging from most existing benchmarks that evaluate models in parallel, EvaLearn requires models to solve problems sequentially, allowing them to leverage the experience gained from previous solutions.
 
 ### 🧩 Framework Components
 
@@ -58,17 +60,18 @@ python EvaLearn/Evaluate/evaluate.py --input EvaLearn/Dataset/EvaLearn_Problem.j
 
 ### Command Line Arguments
 
-| Argument | Description |
-|----------|-------------|
-| `--input` | Path to the problem JSON file |
-| `--seq` | Path to the sequence JSON file |
-| `--output` | Path to save the evaluation results |
-| `--workers` | Number of worker threads for parallel processing |
-| `--no-check-empty` | Skip checking for empty responses |
-| `--judge-api-key` | API key for the judge model |
-| `--client-api-key` | API key for the client model |
-| `--judge-model` | Model to use for judging (default: "gpt-4o-2024-11-20") |
-| `--client-model` | Model to use for client responses (default: "gpt-4o-2024-11-20") |
+
+| Argument           | Description                                                      |
+| ------------------ | ---------------------------------------------------------------- |
+| `--input`          | Path to the problem JSON file                                    |
+| `--seq`            | Path to the sequence JSON file                                   |
+| `--output`         | Path to save the evaluation results                              |
+| `--workers`        | Number of worker threads for parallel processing                 |
+| `--no-check-empty` | Skip checking for empty responses                                |
+| `--judge-api-key`  | API key for the judge model                                      |
+| `--client-api-key` | API key for the client model                                     |
+| `--judge-model`    | Model to use for judging (default: "gpt-4o-2024-11-20")          |
+| `--client-model`   | Model to use for client responses (default: "gpt-4o-2024-11-20") |
 
 ### Library Usage
 
@@ -105,52 +108,72 @@ sequentialEval(
 
 EvaLearn provides a systematic set of evaluation metrics to quantify the learning capability and efficiency of large language models in sequential problem solving. You can use `EvaLearn/Evaluate/evaluate_metric.py` to automatically compute the following five core metrics from your model's output (in JSON format):
 
-| Metric Name | Description |
-|-------------|-------------|
-| **Overall Sequence Accuracy (Acc)** | The average accuracy across all problems and sequences. Reflects the overall performance of the model. Higher is better. |
-| **Slope of Fitted Accuracy Curve (k)** | The slope of the linear regression line fitted to position-wise accuracy within each sequence. Measures the model's learning speed within a sequence. Positive values indicate learning. |
-| **Average Position of First Correct Solution (P_first)** | The average position of the first correct answer in each sequence. Lower values mean the model learns faster. |
-| **Average Number of Consecutive Correct Solutions (N_consec)** | The average length of the longest consecutive correct answers per sequence. Reflects the model's ability to maintain correct answers. Higher is better. |
-| **Post-warmup Accuracy (Acc_pw-K)** | The average accuracy after excluding the first K problems in each sequence, measuring performance after a "warmup" phase. |
+# EvaLearn Metrics Evaluation
 
-### Metric Evaluation CLI Usage
+This repository provides a script for evaluating model performance on sequential problem-solving tasks using a variety of metrics. The main script is `Evaluate/evaluate_metric.py`.
 
-You can compute these metrics with the following command:
+## Features
+
+- **Overall sequence accuracy**
+- **Slope of fitted accuracy curve (learning speed)**
+- **Average position of first correct solution**
+- **Average number of consecutive correct solutions**
+- **Post-warmup accuracy (excluding first K problems)**
+- **Metrics by task type**
+
+## Usage
+
+### 1. Prepare Your Results
+
+Your results should be in a JSON file, where each item contains at least:
+- `sequence_id`: Unique identifier for a sequence
+- `position_in_sequence`: Position (1-based) of the problem in the sequence
+- `type`: (Optional) Task type/category
+- `gpt4judge`: String containing a JSON with an `answer_score` field, e.g.:
+  ```
+  ... ```json
+  {"answer_score": 1}
+  ```
+  ```
+
+### 2. Run the Evaluation
 
 ```bash
-python EvaLearn/Evaluate/evaluate_metric.py --results results.json --problems 7 --warmup 3
+python Evaluate/evaluate_metric.py --results <results.json> [--problems 7] [--warmup 3] [--output <report.json>]
 ```
 
-- `--results`: Path to the model evaluation output JSON file
+- `--results`: Path to your results JSON file (**required**)
 - `--problems`: Number of problems per sequence (default: 7)
-- `--warmup`: The K value for post-warmup accuracy (default: 3)
+- `--warmup`: Number of initial problems to exclude for post-warmup accuracy (default: 3)
+- `--output`: Path to save the report as JSON (default: `report_<results.json>`)
 
-The script will output both overall and per-task-type metrics.
+### 3. Output
 
----
+- Prints a summary of all metrics to the console, including:
+  - Overall metrics
+  - Position-wise accuracy
+  - Metrics by task type
+- Saves a detailed report as a JSON file (if `--output` is specified).
 
-### Example Output
+### 4. Example
 
-```
-===== EvaLearn Evaluation Report =====
-Total Questions: 1274
-Total Sequences: 182
-Problems per Sequence: 7
-
-=== OVERALL METRICS ===
-Overall Accuracy: 0.5123
-Accuracy Slope (k): 0.0345
-Avg. First Correct Position: 2.87
-Avg. Consecutive Correct: 2.14
-Post-warmup Accuracy (K=3): 0.6012
-
-=== POSITION-WISE ACCURACY ===
-Position 1: 0.4120
-Position 2: 0.4890
-...
+```bash
+python Evaluate/evaluate_metric.py --results my_eval_results.json --problems 7 --warmup 3 --output my_report.json
 ```
 
-For more details and explanations, please refer to the comments in `EvaLearn/Evaluate/evaluate_metric.py`.
+## Metrics Explained
+
+- **Overall sequence accuracy**: Proportion of correct answers across all problems and sequences.
+- **Position-wise Accuracy**: Accuracy at each position in the sequence.
+- **Accuracy Slope (k)**: Slope of a linear fit to position-wise accuracy; higher means faster learning within a sequence.
+- **Average position of first correct solution**: Average position in the sequence where the first correct answer appears (lower is better).
+- **Average number of consecutive correct solutions**: Average length of the longest streak of correct answers per sequence.
+- **Post-warmup Accuracy**: Accuracy after excluding the first K problems in each sequence.
+
+
+## Logging
+
+- Logs are saved to `evaluation_metrics.log` and also printed to the console.
 
 ## 📊 Data Format
 
@@ -170,15 +193,16 @@ Each problem in `EvaLearn_Problem.json` has the following structure:
 }
 ```
 
-| Field | Description |
-|-------|-------------|
-| `id` | Unique identifier for the problem |
-| `type` | Category of the problem (e.g., "Logical Reasoning", "Mathematical Reasoning") |
-| `source` | Origin of the problem |
-| `level` | Difficulty level |
-| `prompt` | The question text (can be a string or an array of strings) |
-| `rubric` | Criteria used by the judge model to evaluate responses |
-| `canonical_answer` | The expected correct answer |
+
+| Field              | Description                                                                   |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `id`               | Unique identifier for the problem                                             |
+| `type`             | Category of the problem (e.g., "Logical Reasoning", "Mathematical Reasoning") |
+| `source`           | Origin of the problem                                                         |
+| `level`            | Difficulty level                                                              |
+| `prompt`           | The question text (can be a string or an array of strings)                    |
+| `rubric`           | Criteria used by the judge model to evaluate responses                        |
+| `canonical_answer` | The expected correct answer                                                   |
 
 ### Sequence JSON Format
 
@@ -192,11 +216,12 @@ Each sequence in `EvaLearn_Sequence.json` has the following structure:
 }
 ```
 
-| Field | Description |
-|-------|-------------|
-| `sequence_id` | Unique identifier for the sequence |
-| `type` | Category of the sequence (e.g., "Extraction", "Logical Reasoning") |
-| `question_ids` | Ordered list of problem IDs that form the sequence |
+
+| Field          | Description                                                        |
+| -------------- | ------------------------------------------------------------------ |
+| `sequence_id`  | Unique identifier for the sequence                                 |
+| `type`         | Category of the sequence (e.g., "Extraction", "Logical Reasoning") |
+| `question_ids` | Ordered list of problem IDs that form the sequence                 |
 
 ## 🔑 Key Functions
 
@@ -257,13 +282,11 @@ evaluate_sequence(
 
 This project is licensed under the Apache-2.0 License - see the LICENSE file for details.
 
-
-
 ## 📧 Contact
 
 Shihan Dou: shdou24@m.fudan.edu.cn
 
-
+Ming Zhang: mingzhang23@m.fudan.edu.cn
 
 ## ❤️ Acknowledgement
 
@@ -271,7 +294,6 @@ We gratefully acknowledge the significant contributions made by **the annotation
 
 We also wish to express our sincere appreciation to **an undisclosed third-party annotation company ❤️❤️** for their substantial support in data annotation.
 Finally, we would like to thank all individuals who participated in and supported this project for their valuable input.
-
 
 ## 👋Citation
 

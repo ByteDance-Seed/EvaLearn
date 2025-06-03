@@ -4,7 +4,6 @@
 import json
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import os
 import argparse
@@ -160,10 +159,10 @@ class EvaLearnMetrics:
         """
         metrics = {
             "overall_accuracy": self.overall_accuracy(by_type),
-            "position_accuracy": self.position_accuracy(by_type),
+            "position_accuracy": self.position_accuracy(by_type, avg_by_type=True),
             "accuracy_slope": self.accuracy_slope(by_type),
-            "first_correct_position": self.first_correct_position(by_type),
-            "consecutive_correct": self.consecutive_correct(by_type),
+            "first_correct_position": self.first_correct_position(by_type, avg_by_type=True),
+            "consecutive_correct": self.consecutive_correct(by_type, avg_by_type=True),
             f"post_warmup_accuracy_k{warmup_k}": self.post_warmup_accuracy(warmup_k, by_type)
         }
         return metrics
@@ -196,7 +195,7 @@ class EvaLearnMetrics:
                 type_accuracy[seq_type] = correct / total if total > 0 else 0
             return type_accuracy
     
-    def position_accuracy(self, by_type=False):
+    def position_accuracy(self, by_type=False, avg_by_type=False):
         """
         Calculate the position-wise accuracy curve (Acc_m).
         
@@ -204,24 +203,32 @@ class EvaLearnMetrics:
         
         Args:
             by_type (bool): Whether to calculate metrics by task type
+            avg_by_type (bool): If True, return average position accuracy across task types
+                                (each task type given equal weight)
             
         Returns:
             numpy.ndarray or dict: Accuracy at each position, or results by type
         """
-        if not by_type:
-            # Convert to numpy array for easier column-wise operations
+        # Calculate by type first
+        type_position_accuracy = {}
+        for seq_type, seq_ids in self.type_sequences.items():
+            # Collect all sequences of this type
+            seqs = [self.sequence_outcomes[seq_id] for seq_id in seq_ids]
+            if seqs:
+                type_position_accuracy[seq_type] = np.mean(np.array(seqs), axis=0)
+            else:
+                type_position_accuracy[seq_type] = np.zeros(self.M)
+        
+        if by_type:
+            return type_position_accuracy
+        elif avg_by_type:
+            # Average across types (giving equal weight to each type)
+            all_type_accs = np.array(list(type_position_accuracy.values()))
+            return np.mean(all_type_accs, axis=0)
+        else:
+            # Traditional overall average (all sequences weighted equally)
             y_nm_array = np.array(self.y_nm)
             return np.mean(y_nm_array, axis=0)
-        else:
-            type_position_accuracy = {}
-            for seq_type, seq_ids in self.type_sequences.items():
-                # Collect all sequences of this type
-                seqs = [self.sequence_outcomes[seq_id] for seq_id in seq_ids]
-                if seqs:
-                    type_position_accuracy[seq_type] = np.mean(np.array(seqs), axis=0)
-                else:
-                    type_position_accuracy[seq_type] = np.zeros(self.M)
-            return type_position_accuracy
     
     def accuracy_slope(self, by_type=False):
         """
@@ -237,7 +244,8 @@ class EvaLearnMetrics:
             float or dict: Slope of the linear regression line, or results by type
         """
         if not by_type:
-            acc_m = self.position_accuracy()
+            # Use type-averaged position accuracy for slope calculation
+            acc_m = self.position_accuracy(avg_by_type=True)
             positions = np.arange(1, self.M + 1)
             
             # Reshape data for sklearn
@@ -265,7 +273,7 @@ class EvaLearnMetrics:
                 
             return type_slopes
     
-    def first_correct_position(self, by_type=False):
+    def first_correct_position(self, by_type=False, avg_by_type=False):
         """
         Calculate the average position of first correct solution (P_first).
         
@@ -274,6 +282,7 @@ class EvaLearnMetrics:
         
         Args:
             by_type (bool): Whether to calculate metrics by task type
+            avg_by_type (bool): If True, average across task types (equal weight per type)
             
         Returns:
             float or dict: Average position of first correct solution, or results by type
@@ -297,13 +306,19 @@ class EvaLearnMetrics:
         
         if by_type:
             return type_avg
-        else:
+        elif avg_by_type:
             # Calculate average across all types (giving equal weight to each type)
             if not type_avg:
                 return 0
             return sum(type_avg.values()) / len(type_avg)
+        else:
+            # Calculate average across all sequences (traditional method)
+            all_positions = []
+            for seq_positions in type_first_positions.values():
+                all_positions.extend(seq_positions)
+            return sum(all_positions) / len(all_positions) if all_positions else 0
     
-    def consecutive_correct(self, by_type=False):
+    def consecutive_correct(self, by_type=False, avg_by_type=False):
         """
         Calculate the average number of consecutive correct solutions (N_consec).
         
@@ -312,6 +327,7 @@ class EvaLearnMetrics:
         
         Args:
             by_type (bool): Whether to calculate metrics by task type
+            avg_by_type (bool): If True, average across task types (equal weight per type)
             
         Returns:
             float or dict: Average length of max consecutive correct answers, or results by type
@@ -338,11 +354,17 @@ class EvaLearnMetrics:
         
         if by_type:
             return type_avg
-        else:
+        elif avg_by_type:
             # Calculate average across all types (giving equal weight to each type)
             if not type_avg:
                 return 0
             return sum(type_avg.values()) / len(type_avg)
+        else:
+            # Calculate average across all sequences (traditional method)
+            all_consecutive = []
+            for seq_consecutive in type_max_consecutive.values():
+                all_consecutive.extend(seq_consecutive)
+            return sum(all_consecutive) / len(all_consecutive) if all_consecutive else 0
     
     def post_warmup_accuracy(self, K=3, by_type=False):
         """
@@ -383,57 +405,20 @@ class EvaLearnMetrics:
                 type_post_warmup[seq_type] = correct / total if total > 0 else 0.0
             return type_post_warmup
     
-    def plot_position_accuracy(self, output_file=None):
-        """
-        Plot position-wise accuracy curve.
-        
-        Args:
-            output_file (str, optional): Path to save the plot. If None, display the plot.
-        """
-        acc_m = self.position_accuracy()
-        positions = np.arange(1, self.M + 1)
-        
-        plt.figure(figsize=(10, 6))
-        plt.plot(positions, acc_m, 'o-', linewidth=2, markersize=8)
-        
-        # Fit and plot regression line
-        X = positions.reshape(-1, 1)
-        model = LinearRegression()
-        model.fit(X, acc_m)
-        plt.plot(positions, model.predict(X), 'r--', linewidth=2, 
-                 label=f'Slope (k): {model.coef_[0]:.4f}')
-        
-        plt.xlabel('Problem Position in Sequence', fontsize=14)
-        plt.ylabel('Accuracy', fontsize=14)
-        plt.title('Position-wise Accuracy Curve', fontsize=16)
-        plt.xticks(positions)
-        plt.grid(True, linestyle='--', alpha=0.7)
-        plt.legend(fontsize=12)
-        
-        if output_file:
-            plt.savefig(output_file, dpi=300, bbox_inches='tight')
-            logger.info(f"Saved position accuracy plot to {output_file}")
-        else:
-            plt.show()
-    
-    def generate_report(self, output_file=None, plot_file=None, warmup_k=3):
+    def generate_report(self, output_file=None, warmup_k=3):
         """
         Generate a comprehensive report of all metrics.
         
         Args:
             output_file (str, optional): Path to save the report as JSON. If None, just return the metrics.
-            plot_file (str, optional): Path to save the position accuracy plot.
             warmup_k (int): Parameter K for post-warmup accuracy
             
         Returns:
             dict: Dictionary containing all metrics
         """
         # Compute all metrics
-        metrics = self.compute_all_metrics(warmup_k, by_type=False)
-        
-        # Generate position accuracy plot if requested
-        if plot_file:
-            self.plot_position_accuracy(plot_file)
+        overall_metrics = self.compute_all_metrics(warmup_k, by_type=False)
+        type_metrics = self.compute_all_metrics(warmup_k, by_type=True)
         
         # Format metrics for report with more descriptive names
         report = {
@@ -443,34 +428,47 @@ class EvaLearnMetrics:
                     "problems_per_sequence": self.M,
                     "total_problems": self.N * self.M
                 },
-                "metrics": {
+                "overall_metrics": {
                     "overall_accuracy": {
-                        "value": metrics["overall_accuracy"],
+                        "value": overall_metrics["overall_accuracy"],
                         "description": "Average accuracy across all problems and sequences"
                     },
                     "accuracy_slope": {
-                        "value": metrics["accuracy_slope"],
+                        "value": overall_metrics["accuracy_slope"],
                         "description": "Slope of fitted accuracy curve (learning speed)"
                     },
                     "first_correct_position": {
-                        "value": metrics["first_correct_position"],
+                        "value": overall_metrics["first_correct_position"],
                         "description": "Average position of first correct solution"
                     },
                     "consecutive_correct": {
-                        "value": metrics["consecutive_correct"],
+                        "value": overall_metrics["consecutive_correct"],
                         "description": "Average number of consecutive correct solutions"
                     },
                     f"post_warmup_accuracy_k{warmup_k}": {
-                        "value": metrics[f"post_warmup_accuracy_k{warmup_k}"],
+                        "value": overall_metrics[f"post_warmup_accuracy_k{warmup_k}"],
                         "description": f"Average accuracy after excluding first {warmup_k} problems"
+                    },
+                    "position_accuracy": {
+                        "values": overall_metrics["position_accuracy"].tolist(),
+                        "description": "Accuracy at each position across all sequences"
                     }
                 },
-                "position_accuracy": {
-                    "values": metrics["position_accuracy"].tolist(),
-                    "description": "Accuracy at each position across all sequences"
-                }
+                "type_metrics": {}
             }
         }
+        
+        # Add type-specific metrics to the report
+        for task_type in sorted(self.type_sequences.keys()):
+            report["model_evaluation"]["type_metrics"][task_type] = {
+                "sequence_count": len(self.type_sequences[task_type]),
+                "overall_accuracy": type_metrics["overall_accuracy"][task_type],
+                "accuracy_slope": type_metrics["accuracy_slope"][task_type],
+                "first_correct_position": type_metrics["first_correct_position"][task_type],
+                "consecutive_correct": type_metrics["consecutive_correct"][task_type],
+                f"post_warmup_accuracy_k{warmup_k}": type_metrics[f"post_warmup_accuracy_k{warmup_k}"][task_type],
+                "position_accuracy": type_metrics["position_accuracy"][task_type].tolist()
+            }
         
         # Save report if output file is provided
         if output_file:
@@ -489,11 +487,16 @@ def main():
     parser.add_argument('--results', required=True, help='Path to the evaluation results JSON file')
     parser.add_argument('--problems', type=int, default=7, help='Number of problems per sequence')
     parser.add_argument('--warmup', type=int, default=3, help='Warmup parameter K for post-warmup accuracy')
+    parser.add_argument('--output', help='Path to save the report JSON file')
     
     args = parser.parse_args()
     
     # Initialize metrics calculator
     metrics = EvaLearnMetrics(args.results, args.problems)
+    
+    # Generate and save report
+    output_file = args.output or f"report_{os.path.basename(args.results)}"
+    report = metrics.generate_report(output_file=output_file, warmup_k=args.warmup)
     
     # Calculate overall metrics
     overall_metrics = metrics.compute_all_metrics(args.warmup, by_type=False)
@@ -506,6 +509,7 @@ def main():
     print(f"Total Questions: {metrics.N * metrics.M}")
     print(f"Total Sequences: {metrics.N}")
     print(f"Problems per Sequence: {metrics.M}")
+    print(f"Report saved to: {output_file}")
     
     print("\n=== OVERALL METRICS ===")
     print(f"Overall Accuracy: {overall_metrics['overall_accuracy']:.4f}")
