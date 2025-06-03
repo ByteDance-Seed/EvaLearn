@@ -8,7 +8,7 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 [![Paper](https://img.shields.io/badge/Paper-Arxiv-blue.svg?style=for-the-badge)](./EvaLearn-paper.pdf)
 [![Code License](https://img.shields.io/badge/Code_License-Apache_2.0-yellow.svg?style=for-the-badge)](./LICENSE)
-[![Data License](https://img.shields.io/badge/Data_License-Apache_2.0-red.svg?style=for-the-badge)](./DATA_LICENSE)
+[![Data License](https://img.shields.io/badge/Data_License-CC_BY_4.0-red.svg?style=for-the-badge)](./DATA_LICENSE)
 
 </div>
 
