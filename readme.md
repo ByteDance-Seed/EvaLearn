@@ -297,4 +297,11 @@ Finally, we would like to thank all individuals who participated in and supporte
 
 ## 👋Citation
 
-TBD
+```
+@article{dou2025evalearn,
+  title={EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving},
+  author={Dou, Shihan and Zhang, Ming and Huang, Chenhao and Chen, Jiayi and Chen, Feng and Liu, Shichun and Liu, Yan and Liu, Chenxiao and Zhong, Cheng and Zhang, Zongzhang and others},
+  journal={arXiv preprint arXiv:2506.02672},
+  year={2025}
+}
+```
