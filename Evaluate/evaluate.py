@@ -506,7 +506,7 @@ def check_results_integrity(output_json_path, seq_json_path):
                 if pos in result_seqs[seq_id]:
                     logger.warning(f"Warning: Duplicate position_in_sequence={pos} found in sequence_id={seq_id}")
                 
-                result_seqs[seq_id][pos] = item['unique_id'] if 'unique_id' in item else None
+                result_seqs[seq_id][pos] = item['id'] if 'id' in item else None
         
         # Check completeness of each sequence
         issues = []
@@ -681,7 +681,7 @@ def sequentialEval(input_json_path, seq_json_path, output_json_path, worker_nums
             if affected_sequences:
                 # Build data index and system prompts
                 for item in data:
-                    data_idx[item['unique_id']] = item
+                    data_idx[item['id']] = item
                     if item['type'] not in system_prompts:
                         system_prompts[item['type']] = f"You are a student who needs to complete a question about [{item['type']}] ability. Before giving you the final question, I will provide some questions you've answered before, along with your answers and the teacher's evaluations of these historical answers. You can learn from these historical records to better familiarize yourself with this task, improve your [{item['type']}] ability, and better complete the final question.\n\n"
                 
@@ -709,8 +709,8 @@ def sequentialEval(input_json_path, seq_json_path, output_json_path, worker_nums
 
     # Build data index and system prompts
     for item in data:
-        # Use only unique_id as index key
-        data_idx[item['unique_id']] = item
+        # Use id as index key
+        data_idx[item['id']] = item
         
         # If system prompt for this type hasn't been set
         if item['type'] not in system_prompts:
