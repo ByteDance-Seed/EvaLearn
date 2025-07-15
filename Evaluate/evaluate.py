@@ -208,7 +208,6 @@ class GPTAnnotator:
                 self.client, 
                 self.client_model, 
                 messages, 
-                max_tokens=16384
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
