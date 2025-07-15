@@ -176,7 +176,7 @@ Each problem in `Dataset/EvaLearn_Problem.json` has the following structure:
 | `rubric_en`        | English evaluation criteria used by the judge model                           |
 | `canonical_answer` | The expected correct answer                                                   |
 
-**Note**: The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubric** for evaluation. We will also update it with a high-quality English rubric in the future.
+**Note**: The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubrics** for evaluation. We will also update it with a high-quality English rubric in the future.
 
 ### Sequence JSON Format
 
@@ -281,7 +281,7 @@ Ming Zhang: mingzhang23@m.fudan.edu.cn
 
 ## ❤️ Acknowledgement
 
-We gratefully acknowledge the significant contributions made by **the annotation teams at ByteDance**, whose diligent work was essential to the success of this paper ❤️❤️. The core members of the annotation team include Di Cheng, Linhua Deng, Yanxi Fu, Yafei Qiao, Chaoqian Ren, Mei Su, Ying Wu, Baitong Yang, and Xingyu Zhu.
+We gratefully acknowledge the significant contributions made by **the annotation teams at ByteDance**, whose diligent work was essential to the success of this paper ❤️❤️. The core members of the annotation team include **Di Cheng, Linhua Deng, Yanxi Fu, Yafei Qiao, Chaoqian Ren, Mei Su, Ying Wu, Baitong Yang, and Xingyu Zhu.**
 
 We also wish to express our sincere appreciation to **an undisclosed third-party annotation company ❤️❤️** for their substantial support in data annotation.
 Finally, we would like to thank all individuals who participated in and supported this project for their valuable input.
