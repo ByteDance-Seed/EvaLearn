@@ -14,31 +14,23 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 ## 📚 Overview
 
-EvaLearn is a pioneering benchmark designed to evaluate large language models (LLMs) on their learning capability and efficiency in challenging tasks.
-
-EvaLearn contains 648 challenging problems across six task types, grouped into 182 sequences, each sequence dedicated to one task type.
-
-Diverging from most existing benchmarks that evaluate models in parallel, EvaLearn requires models to solve problems sequentially, allowing them to leverage the experience gained from previous solutions.
+EvaLearn is a benchmark designed to evaluate large language models (LLMs) on their learning capability and efficiency. It contains 648 challenging problems across six task types, grouped into 182 sequences. Unlike traditional benchmarks that evaluate models in parallel, EvaLearn requires models to solve problems sequentially, allowing them to leverage experience from previous solutions.
 
 ### 🧩 Framework Components
 
 The EvaLearn evaluation framework consists of:
 
-1. A sequential evaluation tool (`evaluate.py`) that processes sequences of questions
-2. A dataset of problem definitions (`EvaLearn_Problem.json`)
-3. A dataset of sequence definitions (`EvaLearn_Sequence.json`)
+1. A streamlined sequential evaluation tool (`Evaluate/evaluate.py`) that processes sequences of questions
+2. A dataset of problem definitions (`Dataset/EvaLearn_Problem.json`)
+3. A dataset of sequence definitions (`Dataset/EvaLearn_Sequence.json`)
+4. A metrics evaluation tool (`Evaluate/evaluate_metric.py`) for analyzing results
 
 ## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.7+
-- API Keys for OpenAI and Alternative LLMs
 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/EvaLearn.git
+git clone https://github.com/YOUR_USERNAME/EvaLearn.git
 cd EvaLearn
 pip install -r requirements.txt
 ```
@@ -47,58 +39,49 @@ pip install -r requirements.txt
 
 ### Command Line Interface
 
-The main entry point is the `sequentialEval` function in `evaluate.py`. You can run it from the command line:
+Run the evaluation:
 
 ```bash
-python EvaLearn/Evaluate/evaluate.py --input EvaLearn/Dataset/EvaLearn_Problem.json \
-                                    --seq EvaLearn/Dataset/EvaLearn_Sequence.json \
-                                    --output results.json \
-                                    --workers 4 \
-                                    --client-api-key YOUR_CLIENT_API_KEY \
-                                    --judge-api-key YOUR_JUDGE_API_KEY
+python Evaluate/evaluate.py --input Dataset/EvaLearn_Problem.json \
+                               --seq Dataset/EvaLearn_Sequence.json \
+                               --output results.json \
+                               --workers 4 \
+                               --client-api-key YOUR_CLIENT_API_KEY \
+                               --judge-api-key YOUR_JUDGE_API_KEY
 ```
 
 ### Command Line Arguments
 
 
-| Argument           | Description                                                      |
-| ------------------ | ---------------------------------------------------------------- |
-| `--input`          | Path to the problem JSON file                                    |
-| `--seq`            | Path to the sequence JSON file                                   |
-| `--output`         | Path to save the evaluation results                              |
-| `--workers`        | Number of worker threads for parallel processing                 |
-| `--no-check-empty` | Skip checking for empty responses                                |
-| `--judge-api-key`  | API key for the judge model                                      |
-| `--client-api-key` | API key for the client model                                     |
-| `--judge-model`    | Model to use for judging (default: "gpt-4o-2024-11-20")          |
-| `--client-model`   | Model to use for client responses (default: "gpt-4o-2024-11-20") |
+| Argument                | Description                                                      |
+| ----------------------- | ---------------------------------------------------------------- |
+| `--input`               | Path to the problem JSON file                                    |
+| `--seq`                 | Path to the sequence JSON file                                   |
+| `--output`              | Path to save the evaluation results                              |
+| `--workers`             | Number of worker threads for parallel processing                 |
+| `--no-check-empty`      | Skip checking for empty responses                                |
+| `--judge-api-key`       | API key for the judge model                                      |
+| `--client-api-key`      | API key for the client model                                     |
+| `--judge-model`         | Model to use for judging (default: "gpt-4o-2024-11-20")          |
+| `--client-model`        | Model to use for client responses (default: "gpt-4o-2024-11-20") |
+| `--judge-api-base-url`  | Custom base URL for judge API calls                              |
+| `--client-api-base-url` | Custom base URL for client API calls                             |
+
+### Key Features
+
+- **Checkpoint Recovery**: Automatically resumes interrupted evaluations
+- **API Compatibility**: Support for custom API endpoints  
+- **Parallel Processing**: Multi-threaded execution for faster processing
 
 ### Library Usage
 
-You can also import and use the functions directly in your Python code:
-
 ```python
-from EvaLearn.Evaluate.evaluate import sequentialEval, load_evaluation_data, select_sequences_for_evaluation
+from Evaluate.evaluate import sequentialEval
 
-# Load data
-sequences, problems_dict = load_evaluation_data(
-    "EvaLearn/Dataset/EvaLearn_Sequence.json",
-    "EvaLearn/Dataset/EvaLearn_Problem.json"
-)
-
-# Select specific sequences
-selected_sequences = select_sequences_for_evaluation(
-    sequences, 
-    num_sequences=5,  # Randomly select 5 sequences
-    sequence_types=["Logical Reasoning"]  # Only select sequences of this type
-)
-
-# Run evaluation
 sequentialEval(
-    input_json_path="EvaLearn/Dataset/EvaLearn_Problem.json",
-    seq_json_path="EvaLearn/Dataset/EvaLearn_Sequence.json",
+    input_json_path="Dataset/EvaLearn_Problem.json",
+    seq_json_path="Dataset/EvaLearn_Sequence.json",
     output_json_path="results.json",
-    worker_nums=4,
     client_api_key="YOUR_CLIENT_API_KEY",
     judge_api_key="YOUR_JUDGE_API_KEY"
 )
@@ -106,37 +89,34 @@ sequentialEval(
 
 ## 📈 Evaluation Metrics
 
-EvaLearn provides a systematic set of evaluation metrics to quantify the learning capability and efficiency of large language models in sequential problem solving. You can use `EvaLearn/Evaluate/evaluate_metric.py` to automatically compute the following five core metrics from your model's output (in JSON format):
+Use `Evaluate/evaluate_metric.py` to compute learning metrics from your results:
 
-# EvaLearn Metrics Evaluation
+```bash
+python Evaluate/evaluate_metric.py --results results.json --output report.json
+```
 
-This repository provides a script for evaluating model performance on sequential problem-solving tasks using a variety of metrics. The main script is `Evaluate/evaluate_metric.py`.
+### Metrics
 
-## Features
+- Overall sequence accuracy
+- Position-wise Accuracy
+- Slope of fitted accuracy curve
+- Average position of first correct solution
+- Average number of consecutive correct solutions
+- Post-warmup Accuracy
 
-- **Overall sequence accuracy**
-- **Slope of fitted accuracy curve (learning speed)**
-- **Average position of first correct solution**
-- **Average number of consecutive correct solutions**
-- **Post-warmup accuracy (excluding first K problems)**
-- **Metrics by task type**
+For detailed metric descriptions, please refer to the Section 2.3 of the paper.
 
-## Usage
+### Usage
 
-### 1. Prepare Your Results
+#### 1. Prepare Your Results
 
-Your results should be in a JSON file, where each item contains at least:
-- `sequence_id`: Unique identifier for a sequence
+Your results should be in a JSON file, where each item contains at least:`sequence_id`: Unique identifier for a sequence
+
 - `position_in_sequence`: Position (1-based) of the problem in the sequence
 - `type`: (Optional) Task type/category
-- `gpt4judge`: String containing a JSON with an `answer_score` field, e.g.:
-  ```
-  ... ```json
-  {"answer_score": 1}
-  ```
-  ```
+- `gpt4judge`: String containing a JSON with an `answer_score` field
 
-### 2. Run the Evaluation
+#### 2. Run the Evaluation
 
 ```bash
 python Evaluate/evaluate_metric.py --results <results.json> [--problems 7] [--warmup 3] [--output <report.json>]
@@ -147,7 +127,7 @@ python Evaluate/evaluate_metric.py --results <results.json> [--problems 7] [--wa
 - `--warmup`: Number of initial problems to exclude for post-warmup accuracy (default: 3)
 - `--output`: Path to save the report as JSON (default: `report_<results.json>`)
 
-### 3. Output
+#### 3. Output
 
 - Prints a summary of all metrics to the console, including:
   - Overall metrics
@@ -155,23 +135,13 @@ python Evaluate/evaluate_metric.py --results <results.json> [--problems 7] [--wa
   - Metrics by task type
 - Saves a detailed report as a JSON file (if `--output` is specified).
 
-### 4. Example
+#### 4. Example
 
 ```bash
 python Evaluate/evaluate_metric.py --results my_eval_results.json --problems 7 --warmup 3 --output my_report.json
 ```
 
-## Metrics Explained
-
-- **Overall sequence accuracy**: Proportion of correct answers across all problems and sequences.
-- **Position-wise Accuracy**: Accuracy at each position in the sequence.
-- **Accuracy Slope (k)**: Slope of a linear fit to position-wise accuracy; higher means faster learning within a sequence.
-- **Average position of first correct solution**: Average position in the sequence where the first correct answer appears (lower is better).
-- **Average number of consecutive correct solutions**: Average length of the longest streak of correct answers per sequence.
-- **Post-warmup Accuracy**: Accuracy after excluding the first K problems in each sequence.
-
-
-## Logging
+### Logging
 
 - Logs are saved to `evaluation_metrics.log` and also printed to the console.
 
@@ -179,7 +149,7 @@ python Evaluate/evaluate_metric.py --results my_eval_results.json --problems 7 -
 
 ### Problem JSON Format
 
-Each problem in `EvaLearn_Problem.json` has the following structure:
+Each problem in `Dataset/EvaLearn_Problem.json` has the following structure:
 
 ```json
 {
@@ -188,8 +158,9 @@ Each problem in `EvaLearn_Problem.json` has the following structure:
   "source": "LogicGame-crypto_puzzle",
   "level": 1,
   "prompt": ["The question text that will be presented to the model"],
-  "rubric": "Evaluation criteria for judging the model's response",
-  "canonical_answer": "The expected correct answer" # Due to certain intellectual property issues, the canonical answers cannot be open-sourced **at this time**.
+  "rubric_zh": "用于判断模型回答质量的中文评分标准",
+  "rubric_en": "English evaluation criteria used by the judge model",
+  "canonical_answer": "The expected correct answer"
 }
 ```
 
@@ -201,12 +172,15 @@ Each problem in `EvaLearn_Problem.json` has the following structure:
 | `source`           | Origin of the problem                                                         |
 | `level`            | Difficulty level                                                              |
 | `prompt`           | The question text (can be a string or an array of strings)                    |
-| `rubric`           | Criteria used by the judge model to evaluate responses                        |
+| `rubric_zh`        | Chinese evaluation criteria used by the judge model                           |
+| `rubric_en`        | English evaluation criteria used by the judge model                           |
 | `canonical_answer` | The expected correct answer                                                   |
+
+**Note**: The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubric** for evaluation. We will also update it with a high-quality English rubric in the future.
 
 ### Sequence JSON Format
 
-Each sequence in `EvaLearn_Sequence.json` has the following structure:
+Each sequence in `Dataset/EvaLearn_Sequence.json` has the following structure:
 
 ```json
 {
@@ -225,9 +199,11 @@ Each sequence in `EvaLearn_Sequence.json` has the following structure:
 
 ## 🔑 Key Functions
 
-### `sequentialEval`
+### Main Evaluation Function
 
-The main evaluation function that processes sequences of questions.
+#### `sequentialEval`
+
+The main evaluation function that processes sequences of questions with checkpoint recovery and API flexibility.
 
 ```python
 sequentialEval(
@@ -239,44 +215,59 @@ sequentialEval(
     judge_api_key=None,
     client_api_key=None,
     judge_model="gpt-4o-2024-11-20",
-    client_model="gpt-4o-2024-11-20"
+    client_model="gpt-4o-2024-11-20",
+    judge_api_base_url=None,
+    client_api_base_url=None
 )
 ```
 
-### `load_evaluation_data`
+**Parameters:**
 
-Loads and validates sequence and problem data.
+- `input_json_path`: Path to the problem JSON file
+- `seq_json_path`: Path to the sequence JSON file
+- `output_json_path`: Path to save evaluation results
+- `worker_nums`: Number of worker threads (default: 5)
+- `check_empty`: Whether to check and reprocess empty responses (default: True)
+- `judge_api_key`: API key for judge model
+- `client_api_key`: API key for client model
+- `judge_model`: Model name for judging (default: "gpt-4o-2024-11-20")
+- `client_model`: Model name for responses (default: "gpt-4o-2024-11-20")
+- `judge_api_base_url`: Custom base URL for judge API
+- `client_api_base_url`: Custom base URL for client API
 
-```python
-load_evaluation_data(sequence_path, problem_path)
-```
+### Core Processing Functions
 
-### `select_sequences_for_evaluation`
+#### `sequential_infer_and_judge`
 
-Selects sequences for evaluation based on criteria.
+Processes a sequence of questions with inference and judging.
 
-```python
-select_sequences_for_evaluation(
-    sequences, 
-    num_sequences=None, 
-    sequence_ids=None, 
-    sequence_types=None
-)
-```
+#### `process_sequence_batch`
 
-### `evaluate_sequence`
+Processes a batch of sequences in parallel with thread-safe result saving.
 
-Evaluates a complete sequence of questions.
+#### `find_empty_responses`
 
-```python
-evaluate_sequence(
-    sequence, 
-    problems_dict, 
-    annotator, 
-    output_dir, 
-    save_results=True
-)
-```
+Identifies sequences with empty responses for reprocessing.
+
+### Utility Functions
+
+#### `load_json` / `save_json`
+
+Handle JSON file loading and saving with error handling and backup mechanisms.
+
+#### `get_history_prompt`
+
+Generates formatted history prompts from previous interactions.
+
+### Configuration
+
+The script uses a `CONFIG` dictionary for various parameters:
+
+- `max_retries`: Maximum API call retries (default: 10)
+- `initial_delay`: Initial retry delay in seconds (default: 1)
+- `max_delay`: Maximum retry delay in seconds (default: 60)
+- `worker_nums`: Default number of worker threads (default: 5)
+- `questions_per_sequence`: Expected questions per sequence (default: 7)
 
 ## 📄 License
 

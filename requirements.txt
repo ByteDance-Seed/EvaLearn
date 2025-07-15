@@ -4,3 +4,4 @@ pandas==2.2.3
 pydantic==2.11.5
 scikit_learn==1.6.1
 tqdm==4.67.1
+httpx

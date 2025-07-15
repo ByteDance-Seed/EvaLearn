@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set variables
-INPUT_FILE="questions.json"
-SEQ_FILE="sequences.json"
+INPUT_FILE="Dataset/EvaLearn_Problem.json"
+SEQ_FILE="Dataset/EvaLearn_Sequence.json"
 OUTPUT_FILE="results.json"
 WORKERS=5
 JUDGE_MODEL="gpt-4o-2024-11-20"
