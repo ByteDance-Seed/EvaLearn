@@ -12,6 +12,11 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 </div>
 
+## 📰 News
+
+- **📅 July 15, 2025**: We've released a new version! 🎉 Open-sourced complete Chinese rubrics, updated Chinese README documentation, and optimized evaluation scripts for improved efficiency and accuracy.
+- **📅 June 5, 2025**: EvaLearn is officially open-sourced! 🚀 We released this innovative benchmark for evaluating the learning capability and efficiency of large language models.
+
 ## 📚 Overview
 
 EvaLearn is a benchmark designed to evaluate large language models (LLMs) on their learning capability and efficiency. It contains 648 challenging problems across six task types, grouped into 182 sequences. Unlike traditional benchmarks that evaluate models in parallel, EvaLearn requires models to solve problems sequentially, allowing them to leverage experience from previous solutions.
@@ -176,7 +181,7 @@ Each problem in `Dataset/EvaLearn_Problem.json` has the following structure:
 | `rubric_en`        | English evaluation criteria used by the judge model                           |
 | `canonical_answer` | The expected correct answer                                                   |
 
-**Note**: The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubrics** for evaluation. We will also update it with a high-quality English rubric in the future.
+**Note**: The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubric** for evaluation. We will also update it with a high-quality English rubric in the future.
 
 ### Sequence JSON Format
 
