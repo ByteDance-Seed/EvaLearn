@@ -14,6 +14,7 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 ## 📰 News
 
+- **📅 September 18, 2025**: EvaLearn was accepted to the NeurIPS 2025 main track with a high score of 5/5/5/5! 🎉`
 - **📅 July 15, 2025**: We've released a new version! 🎉 Open-sourced complete Chinese rubrics, updated Chinese README documentation, and optimized evaluation scripts for improved efficiency and accuracy.
 - **📅 June 5, 2025**: EvaLearn is officially open-sourced! 🚀 We released this innovative benchmark for evaluating the learning capability and efficiency of large language models.
 
@@ -57,9 +58,8 @@ python Evaluate/evaluate.py --input Dataset/EvaLearn_Problem.json \
 
 ### Command Line Arguments
 
-
-| Argument                | Description                                                      |
-| ----------------------- | ---------------------------------------------------------------- |
+| Argument                  | Description                                                      |
+| ------------------------- | ---------------------------------------------------------------- |
 | `--input`               | Path to the problem JSON file                                    |
 | `--seq`                 | Path to the sequence JSON file                                   |
 | `--output`              | Path to save the evaluation results                              |
@@ -75,7 +75,7 @@ python Evaluate/evaluate.py --input Dataset/EvaLearn_Problem.json \
 ### Key Features
 
 - **Checkpoint Recovery**: Automatically resumes interrupted evaluations
-- **API Compatibility**: Support for custom API endpoints  
+- **API Compatibility**: Support for custom API endpoints
 - **Parallel Processing**: Multi-threaded execution for faster processing
 
 ### Library Usage
@@ -169,9 +169,8 @@ Each problem in `Dataset/EvaLearn_Problem.json` has the following structure:
 }
 ```
 
-
-| Field              | Description                                                                   |
-| ------------------ | ----------------------------------------------------------------------------- |
+| Field                | Description                                                                   |
+| -------------------- | ----------------------------------------------------------------------------- |
 | `id`               | Unique identifier for the problem                                             |
 | `type`             | Category of the problem (e.g., "Logical Reasoning", "Mathematical Reasoning") |
 | `source`           | Origin of the problem                                                         |
@@ -195,9 +194,8 @@ Each sequence in `Dataset/EvaLearn_Sequence.json` has the following structure:
 }
 ```
 
-
-| Field          | Description                                                        |
-| -------------- | ------------------------------------------------------------------ |
+| Field            | Description                                                        |
+| ---------------- | ------------------------------------------------------------------ |
 | `sequence_id`  | Unique identifier for the sequence                                 |
 | `type`         | Category of the sequence (e.g., "Extraction", "Logical Reasoning") |
 | `question_ids` | Ordered list of problem IDs that form the sequence                 |
@@ -301,3 +299,4 @@ Finally, we would like to thank all individuals who participated in and supporte
   year={2025}
 }
 ```
+
