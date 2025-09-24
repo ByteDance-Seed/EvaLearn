@@ -14,9 +14,9 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 ## 📰 News
 
-- **📅 September 18, 2025**: EvaLearn was accepted to the NeurIPS 2025 main track with a high score of 5/5/5/5! 🎉`
-- **📅 July 15, 2025**: We've released a new version! 🎉 Open-sourced complete Chinese rubrics, updated Chinese README documentation, and optimized evaluation scripts for improved efficiency and accuracy.
-- **📅 June 5, 2025**: EvaLearn is officially open-sourced! 🚀 We released this innovative benchmark for evaluating the learning capability and efficiency of large language models.
+- **📅 Sep 18, 2025**: EvaLearn was accepted to the NeurIPS 2025 main track with a high score of 5/5/5/5! 🎉
+- **📅 Jul 15, 2025**: We've released a new version! 🎉 Open-sourced complete Chinese rubrics, updated Chinese README documentation, and optimized evaluation scripts for improved efficiency and accuracy.
+- **📅 Jun 5, 2025**: EvaLearn is officially open-sourced! 🚀 We released this innovative benchmark for evaluating the learning capability and efficiency of large language models.
 
 ## 📚 Overview
 
