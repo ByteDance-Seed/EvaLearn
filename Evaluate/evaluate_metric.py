@@ -116,21 +116,37 @@ class EvaLearnMetrics:
     3. Average position of first correct solution (P_first)
     4. Average number of consecutive correct solutions (N_consec)
     5. Post-warmup accuracy (Acc_pw-K)
+    6. Average offset of first learned correct solution (O_learned) - optional, requires zero-shot results
     """
     
-    def __init__(self, results_file: str, num_problems_per_sequence: int = None):
+    def __init__(self, results_file: str, num_problems_per_sequence: int = None, zero_shot_file: str = None):
         """
         Initialize the metrics calculator.
         
         Args:
             results_file (str): Path to the JSON file with evaluation results
             num_problems_per_sequence (int): Number of problems in each sequence
+            zero_shot_file (str, optional): Path to zero-shot evaluation results for learning offset calculation
         """
         self.results_file = results_file
         self.M = num_problems_per_sequence or CONFIG["default_problems_per_sequence"]
         self.results = self._load_results()
         self.y_nm, self.sequence_types, self.sequence_outcomes = self._extract_binary_outcomes()
         self.N = len(self.y_nm)  # Number of sequences
+        
+        # Load zero-shot results if provided
+        self.zero_shot_correct_ids = set()
+        if zero_shot_file:
+            try:
+                zero_shot_results = load_json(zero_shot_file)
+                for item in zero_shot_results:
+                    judge_response = item.get('gpt4judge', '')
+                    score = extract_score_from_judge_response(judge_response)
+                    if score > 0:
+                        self.zero_shot_correct_ids.add(item.get('id'))
+                logger.info(f"Loaded {len(self.zero_shot_correct_ids)} zero-shot correct item IDs")
+            except Exception as e:
+                logger.warning(f"Failed to load zero-shot results: {e}. Learning offset metric will be skipped.")
         
         # Group sequences by type
         self.type_sequences = {}
@@ -256,6 +272,10 @@ class EvaLearnMetrics:
                 "consecutive_correct": self.consecutive_correct(by_type, avg_by_type=True),
                 f"post_warmup_accuracy_k{warmup_k}": self.post_warmup_accuracy(warmup_k, by_type)
             }
+            
+            # Add learning offset metric if zero-shot results are available
+            if self.zero_shot_correct_ids:
+                metrics["first_learned_correct_offset"] = self.first_learned_correct_offset(by_type, avg_by_type=True)
             
             computation_time = time.time() - start_time
             logger.info(f"Metrics computation completed in {computation_time:.2f}s")
@@ -534,6 +554,106 @@ class EvaLearnMetrics:
             logger.error(f"Error calculating post-warmup accuracy: {e}")
             return 0.0 if not by_type else {}
     
+    def first_learned_correct_offset(self, by_type=False, avg_by_type=False):
+        """
+        Calculate the average offset of first learned correct solution (O_learned).
+        
+        This metric measures how quickly a model begins to learn within a sequence while
+        discounting pre-existing knowledge. It identifies the first position where the model
+        answered correctly AFTER the first position it answered incorrectly (compared to zero-shot),
+        indicating genuine learning within the sequence.
+        
+        Lower values indicate faster learning within the feedback/demonstration context.
+        If a model had no learning opportunities (zero-shot correct on all problems),
+        the sequence is skipped.
+        
+        Args:
+            by_type (bool): Whether to calculate metrics by task type
+            avg_by_type (bool): If True, average across task types (equal weight per type)
+            
+        Returns:
+            float or dict: Average offset of first learned correct solution, or results by type
+        """
+        if not self.zero_shot_correct_ids:
+            logger.warning("Zero-shot results not loaded. First learned correct offset cannot be calculated.")
+            return 0 if not by_type else {t: 0 for t in self.type_sequences.keys()}
+        
+        # Build mapping from item ID to sequence/position information
+        id_to_seq_info = {}
+        for item in self.results:
+            item_id = item.get('id')
+            seq_id = item.get('sequence_id')
+            position = item.get('position_in_sequence')
+            if item_id and seq_id and position:
+                if seq_id not in id_to_seq_info:
+                    id_to_seq_info[seq_id] = {}
+                id_to_seq_info[seq_id][position] = item_id
+        
+        # Calculate by type first
+        type_learned_offsets = {}
+        for seq_type, seq_ids in self.type_sequences.items():
+            type_learned_offsets[seq_type] = []
+            
+            for seq_id in seq_ids:
+                if seq_id not in id_to_seq_info:
+                    continue
+                
+                seq_items = id_to_seq_info[seq_id]
+                seq_outcomes = self.sequence_outcomes.get(seq_id, [])
+                
+                # Find the first position where zero-shot was wrong (first_wrong_position)
+                first_wrong_position = None
+                for pos in range(1, self.M + 1):
+                    item_id = seq_items.get(pos)
+                    if item_id and item_id not in self.zero_shot_correct_ids:
+                        first_wrong_position = pos
+                        break
+                
+                # If all positions were zero-shot correct, skip this sequence
+                if first_wrong_position is None:
+                    continue
+                
+                # Convert to 0-based indexing for seq_outcomes
+                idx_first_wrong = first_wrong_position - 1
+                
+                # Find the first position after first_wrong that was answered correctly
+                learned_position = None
+                for idx in range(idx_first_wrong, len(seq_outcomes)):
+                    if seq_outcomes[idx] == 1:
+                        learned_position = idx + 1  # Convert back to 1-based
+                        break
+                
+                # If no correct answer found after first_wrong, use M+1
+                if learned_position is None:
+                    learned_position = self.M + 1
+                
+                # Calculate offset: position from which learning started
+                offset = learned_position - first_wrong_position + 1
+                type_learned_offsets[seq_type].append(offset)
+        
+        # Calculate average for each type (only for types with data)
+        type_avg = {}
+        for t, offsets in type_learned_offsets.items():
+            if offsets:
+                type_avg[t] = sum(offsets) / len(offsets)
+            else:
+                type_avg[t] = 0  # No learning opportunities in this type
+        
+        if by_type:
+            return type_avg
+        elif avg_by_type:
+            # Calculate average across all types that have data (giving equal weight to each type)
+            types_with_data = {t: v for t, v in type_avg.items() if v > 0}
+            if not types_with_data:
+                return 0
+            return sum(types_with_data.values()) / len(types_with_data)
+        else:
+            # Calculate average across all sequences (traditional method)
+            all_offsets = []
+            for offsets in type_learned_offsets.values():
+                all_offsets.extend(offsets)
+            return sum(all_offsets) / len(all_offsets) if all_offsets else 0
+    
     def generate_report(self, output_file: Optional[str] = None, warmup_k: int = None) -> Dict:
         """
         Generate a comprehensive report of all metrics.
@@ -556,6 +676,40 @@ class EvaLearnMetrics:
             type_metrics = self.compute_all_metrics(warmup_k, by_type=True)
             
             # Format metrics for report with more descriptive names
+            overall_metrics_dict = {
+                "overall_accuracy": {
+                    "value": overall_metrics["overall_accuracy"],
+                    "description": "Average accuracy across all problems and sequences"
+                },
+                "accuracy_slope": {
+                    "value": overall_metrics["accuracy_slope"],
+                    "description": "Slope of fitted accuracy curve (learning speed)"
+                },
+                "first_correct_position": {
+                    "value": overall_metrics["first_correct_position"],
+                    "description": "Average position of first correct solution"
+                },
+                "consecutive_correct": {
+                    "value": overall_metrics["consecutive_correct"],
+                    "description": "Average number of consecutive correct solutions"
+                },
+                f"post_warmup_accuracy_k{warmup_k}": {
+                    "value": overall_metrics[f"post_warmup_accuracy_k{warmup_k}"],
+                    "description": f"Average accuracy after excluding first {warmup_k} problems"
+                },
+                "position_accuracy": {
+                    "values": overall_metrics["position_accuracy"].tolist() if hasattr(overall_metrics["position_accuracy"], 'tolist') else overall_metrics["position_accuracy"],
+                    "description": "Accuracy at each position across all sequences"
+                }
+            }
+            
+            # Add learning offset metric if available
+            if "first_learned_correct_offset" in overall_metrics:
+                overall_metrics_dict["first_learned_correct_offset"] = {
+                    "value": overall_metrics["first_learned_correct_offset"],
+                    "description": "Average offset of first learned correct solution (lower is better - measures learning speed while discounting pre-existing knowledge)"
+                }
+            
             report = {
                 "model_evaluation": {
                     "dataset_info": {
@@ -563,34 +717,10 @@ class EvaLearnMetrics:
                         "problems_per_sequence": self.M,
                         "total_problems": self.N * self.M,
                         "sequence_types": {t: len(seq_ids) for t, seq_ids in self.type_sequences.items()},
-                        "warmup_parameter": warmup_k
+                        "warmup_parameter": warmup_k,
+                        "zero_shot_results_provided": bool(self.zero_shot_correct_ids)
                     },
-                    "overall_metrics": {
-                        "overall_accuracy": {
-                            "value": overall_metrics["overall_accuracy"],
-                            "description": "Average accuracy across all problems and sequences"
-                        },
-                        "accuracy_slope": {
-                            "value": overall_metrics["accuracy_slope"],
-                            "description": "Slope of fitted accuracy curve (learning speed)"
-                        },
-                        "first_correct_position": {
-                            "value": overall_metrics["first_correct_position"],
-                            "description": "Average position of first correct solution"
-                        },
-                        "consecutive_correct": {
-                            "value": overall_metrics["consecutive_correct"],
-                            "description": "Average number of consecutive correct solutions"
-                        },
-                        f"post_warmup_accuracy_k{warmup_k}": {
-                            "value": overall_metrics[f"post_warmup_accuracy_k{warmup_k}"],
-                            "description": f"Average accuracy after excluding first {warmup_k} problems"
-                        },
-                        "position_accuracy": {
-                            "values": overall_metrics["position_accuracy"].tolist() if hasattr(overall_metrics["position_accuracy"], 'tolist') else overall_metrics["position_accuracy"],
-                            "description": "Accuracy at each position across all sequences"
-                        }
-                    },
+                    "overall_metrics": overall_metrics_dict,
                     "type_metrics": {}
                 }
             }
@@ -598,7 +728,7 @@ class EvaLearnMetrics:
             # Add type-specific metrics to the report
             for task_type in sorted(self.type_sequences.keys()):
                 if task_type in type_metrics["overall_accuracy"]:
-                    report["model_evaluation"]["type_metrics"][task_type] = {
+                    type_metrics_data = {
                         "sequence_count": len(self.type_sequences[task_type]),
                         "overall_accuracy": type_metrics["overall_accuracy"][task_type],
                         "accuracy_slope": type_metrics["accuracy_slope"][task_type],
@@ -607,6 +737,12 @@ class EvaLearnMetrics:
                         f"post_warmup_accuracy_k{warmup_k}": type_metrics[f"post_warmup_accuracy_k{warmup_k}"][task_type],
                         "position_accuracy": type_metrics["position_accuracy"][task_type].tolist() if hasattr(type_metrics["position_accuracy"][task_type], 'tolist') else type_metrics["position_accuracy"][task_type]
                     }
+                    
+                    # Add learning offset metric if available
+                    if "first_learned_correct_offset" in type_metrics:
+                        type_metrics_data["first_learned_correct_offset"] = type_metrics["first_learned_correct_offset"][task_type]
+                    
+                    report["model_evaluation"]["type_metrics"][task_type] = type_metrics_data
             
             # Save report if output file is provided
             if output_file:
@@ -635,6 +771,8 @@ Examples:
     )
     parser.add_argument('--results', required=True, 
                        help='Path to the evaluation results JSON file')
+    parser.add_argument('--zero-shot', type=str, default=None,
+                       help='Path to zero-shot evaluation results (for learning offset metric)')
     parser.add_argument('--problems', type=int, default=CONFIG["default_problems_per_sequence"], 
                        help=f'Number of problems per sequence (default: {CONFIG["default_problems_per_sequence"]})')
     parser.add_argument('--warmup', type=int, default=CONFIG["default_warmup_k"], 
@@ -658,7 +796,7 @@ Examples:
     
     try:
         # Initialize metrics calculator
-        metrics = EvaLearnMetrics(args.results, args.problems)
+        metrics = EvaLearnMetrics(args.results, args.problems, args.zero_shot)
         
         # Generate output filename if not provided
         output_file = args.output or f"report_{os.path.basename(args.results).replace('.json', '')}.json"

@@ -14,6 +14,7 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 ## 📰 News
 
+- **📅 Jan 13, 2026**: New update! 🎉 We've released **four evaluation scripts** covering different learning paradigms (Zero-shot, Few-shot, Demonstration Learning, Feedback Learning), and **published canonical answers** for all problems in the dataset!
 - **📅 Sep 18, 2025**: EvaLearn was accepted to the NeurIPS 2025 main track with a high score of 5/5/5/5! 🎉
 - **📅 Jul 15, 2025**: We've released a new version! 🎉 Open-sourced complete Chinese rubrics, updated Chinese README documentation, and optimized evaluation scripts for improved efficiency and accuracy.
 - **📅 Jun 5, 2025**: EvaLearn is officially open-sourced! 🚀 We released this innovative benchmark for evaluating the learning capability and efficiency of large language models.
@@ -26,8 +27,12 @@ EvaLearn is a benchmark designed to evaluate large language models (LLMs) on the
 
 The EvaLearn evaluation framework consists of:
 
-1. A streamlined sequential evaluation tool (`Evaluate/evaluate.py`) that processes sequences of questions
-2. A dataset of problem definitions (`Dataset/EvaLearn_Problem.json`)
+1. **Four evaluation scripts** for different learning paradigms:
+   - `Evaluate/zero_shot.py` - Zero-shot evaluation (no context)
+   - `Evaluate/few_shot.py` - Few-shot evaluation (with example Q&A pairs)
+   - `Evaluate/demonstration_learning.py` - Demonstration learning (with cumulative standard answers)
+   - `Evaluate/feedback_learning.py` - Feedback learning (with cumulative answers and teacher evaluations)
+2. A dataset of problem definitions (`Dataset/EvaLearn_Problem.json`) **with canonical answers**
 3. A dataset of sequence definitions (`Dataset/EvaLearn_Sequence.json`)
 4. A metrics evaluation tool (`Evaluate/evaluate_metric.py`) for analyzing results
 
@@ -43,17 +48,57 @@ pip install -r requirements.txt
 
 ## 🛠️ Usage
 
+We provide **four evaluation scripts** for different learning paradigms. Each script evaluates how well the model learns under different conditions.
+
+### 📋 Evaluation Paradigms
+
+| Paradigm | Script | Description |
+| -------- | ------ | ----------- |
+| **Zero-shot** | `zero_shot.py` | Model answers each question independently without any context |
+| **Few-shot** | `few_shot.py` | Model receives example Q&A pairs of the same task type before answering |
+| **Demonstration Learning** | `demonstration_learning.py` | Model accumulates standard answers from previous questions in sequence |
+| **Feedback Learning** | `feedback_learning.py` | Model accumulates its own answers and teacher evaluations from previous questions |
+
 ### Command Line Interface
 
-Run the evaluation:
-
+#### Zero-shot Evaluation
 ```bash
-python Evaluate/evaluate.py --input Dataset/EvaLearn_Problem.json \
-                               --seq Dataset/EvaLearn_Sequence.json \
-                               --output results.json \
-                               --workers 4 \
-                               --client-api-key YOUR_CLIENT_API_KEY \
-                               --judge-api-key YOUR_JUDGE_API_KEY
+python Evaluate/zero_shot.py --input Dataset/EvaLearn_Problem.json \
+                             --seq Dataset/EvaLearn_Sequence.json \
+                             --output results_zero_shot.json \
+                             --workers 4 \
+                             --client-api-key YOUR_CLIENT_API_KEY \
+                             --judge-api-key YOUR_JUDGE_API_KEY
+```
+
+#### Few-shot Evaluation
+```bash
+python Evaluate/few_shot.py --input Dataset/EvaLearn_Problem.json \
+                            --seq Dataset/EvaLearn_Sequence.json \
+                            --output results_few_shot.json \
+                            --workers 4 \
+                            --client-api-key YOUR_CLIENT_API_KEY \
+                            --judge-api-key YOUR_JUDGE_API_KEY
+```
+
+#### Demonstration Learning Evaluation
+```bash
+python Evaluate/demonstration_learning.py --input Dataset/EvaLearn_Problem.json \
+                                          --seq Dataset/EvaLearn_Sequence.json \
+                                          --output results_demonstration.json \
+                                          --workers 4 \
+                                          --client-api-key YOUR_CLIENT_API_KEY \
+                                          --judge-api-key YOUR_JUDGE_API_KEY
+```
+
+#### Feedback Learning Evaluation
+```bash
+python Evaluate/feedback_learning.py --input Dataset/EvaLearn_Problem.json \
+                                     --seq Dataset/EvaLearn_Sequence.json \
+                                     --output results_feedback.json \
+                                     --workers 4 \
+                                     --client-api-key YOUR_CLIENT_API_KEY \
+                                     --judge-api-key YOUR_JUDGE_API_KEY
 ```
 
 ### Command Line Arguments
@@ -81,12 +126,42 @@ python Evaluate/evaluate.py --input Dataset/EvaLearn_Problem.json \
 ### Library Usage
 
 ```python
-from Evaluate.evaluate import sequentialEval
+# Zero-shot evaluation
+from Evaluate.zero_shot import zeroShotEval
+zeroShotEval(
+    input_json_path="Dataset/EvaLearn_Problem.json",
+    seq_json_path="Dataset/EvaLearn_Sequence.json",
+    output_json_path="results_zero_shot.json",
+    client_api_key="YOUR_CLIENT_API_KEY",
+    judge_api_key="YOUR_JUDGE_API_KEY"
+)
 
+# Few-shot evaluation
+from Evaluate.few_shot import fewShotEval
+fewShotEval(
+    input_json_path="Dataset/EvaLearn_Problem.json",
+    seq_json_path="Dataset/EvaLearn_Sequence.json",
+    output_json_path="results_few_shot.json",
+    client_api_key="YOUR_CLIENT_API_KEY",
+    judge_api_key="YOUR_JUDGE_API_KEY"
+)
+
+# Demonstration learning evaluation
+from Evaluate.demonstration_learning import demonstrationEval
+demonstrationEval(
+    input_json_path="Dataset/EvaLearn_Problem.json",
+    seq_json_path="Dataset/EvaLearn_Sequence.json",
+    output_json_path="results_demonstration.json",
+    client_api_key="YOUR_CLIENT_API_KEY",
+    judge_api_key="YOUR_JUDGE_API_KEY"
+)
+
+# Feedback learning evaluation
+from Evaluate.feedback_learning import sequentialEval
 sequentialEval(
     input_json_path="Dataset/EvaLearn_Problem.json",
     seq_json_path="Dataset/EvaLearn_Sequence.json",
-    output_json_path="results.json",
+    output_json_path="results_feedback.json",
     client_api_key="YOUR_CLIENT_API_KEY",
     judge_api_key="YOUR_JUDGE_API_KEY"
 )
@@ -178,9 +253,11 @@ Each problem in `Dataset/EvaLearn_Problem.json` has the following structure:
 | `prompt`           | The question text (can be a string or an array of strings)                    |
 | `rubric_zh`        | Chinese evaluation criteria used by the judge model                           |
 | `rubric_en`        | English evaluation criteria used by the judge model                           |
-| `canonical_answer` | The expected correct answer                                                   |
+| `canonical_answer` | **🆕 The expected correct answer (now publicly available!)**                  |
 
-**Note**: The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubric** for evaluation. We will also update it with a high-quality English rubric in the future.
+**Note**: 
+- The results in our paper use the Chinese rubric, which was carefully annotated by our annotation team and is of high quality. The English version was translated using a large language model to help understand the meaning of the rubric. Therefore, we **strongly recommend** that everyone use the **Chinese rubric** for evaluation. We will also update it with a high-quality English rubric in the future.
+- **🆕 Canonical answers are now included in the dataset!** These can be used for few-shot and demonstration learning evaluations.
 
 ### Sequence JSON Format
 
@@ -202,14 +279,21 @@ Each sequence in `Dataset/EvaLearn_Sequence.json` has the following structure:
 
 ## 🔑 Key Functions
 
-### Main Evaluation Function
+### Main Evaluation Functions
 
-#### `sequentialEval`
+We provide four main evaluation functions, one for each learning paradigm:
 
-The main evaluation function that processes sequences of questions with checkpoint recovery and API flexibility.
+| Function | Script | Description |
+| -------- | ------ | ----------- |
+| `zeroShotEval` | `zero_shot.py` | Zero-shot evaluation without context |
+| `fewShotEval` | `few_shot.py` | Few-shot evaluation with example Q&A pairs |
+| `demonstrationEval` | `demonstration_learning.py` | Demonstration learning with cumulative standard answers |
+| `sequentialEval` | `feedback_learning.py` | Feedback learning with cumulative answers and evaluations |
+
+All functions share the same parameter signature:
 
 ```python
-sequentialEval(
+eval_function(
     input_json_path,
     seq_json_path,
     output_json_path,
@@ -240,17 +324,12 @@ sequentialEval(
 
 ### Core Processing Functions
 
-#### `sequential_infer_and_judge`
+Each evaluation script contains paradigm-specific inference functions:
 
-Processes a sequence of questions with inference and judging.
-
-#### `process_sequence_batch`
-
-Processes a batch of sequences in parallel with thread-safe result saving.
-
-#### `find_empty_responses`
-
-Identifies sequences with empty responses for reprocessing.
+- **`zero_shot_infer_and_judge`**: Processes questions without any context
+- **`few_shot_infer_and_judge`**: Processes questions with few-shot examples
+- **`demonstration_infer_and_judge`**: Processes questions with cumulative standard answers
+- **`sequential_infer_and_judge`**: Processes questions with cumulative feedback
 
 ### Utility Functions
 
@@ -258,13 +337,13 @@ Identifies sequences with empty responses for reprocessing.
 
 Handle JSON file loading and saving with error handling and backup mechanisms.
 
-#### `get_history_prompt`
+#### `find_empty_responses`
 
-Generates formatted history prompts from previous interactions.
+Identifies sequences with empty responses for reprocessing.
 
 ### Configuration
 
-The script uses a `CONFIG` dictionary for various parameters:
+Each script uses a `CONFIG` dictionary for various parameters:
 
 - `max_retries`: Maximum API call retries (default: 10)
 - `initial_delay`: Initial retry delay in seconds (default: 1)
