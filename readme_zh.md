@@ -13,7 +13,6 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 </div>
 
 ## 📰 最新动态
-- **📅 2026年1月13日**: 全新更新！🎉 我们发布了**四种评测脚本**，覆盖不同的学习范式（零样本、少样本、示范学习、反馈学习），并在数据集中**公布了所有问题的参考答案**！
 - **📅 2025年9月18日**: EvaLearn 以 5/5/5/5 的高分被 NeurIPS 2025 主会接收！🎉
 - **📅 2025年7月15日**: 我们更新了新版本！🎉 开源了完整的中文评分标准（rubric），更新了中文README文档，并优化了评测脚本，提升了评估效率和准确性。
 - **📅 2025年6月5日**: EvaLearn 正式开源！🚀 我们发布了这个创新的基准测试，用于评估大语言模型的学习能力和效率。
@@ -26,14 +25,10 @@ EvaLearn 是一个旨在评估大语言模型（LLMs）学习能力和效率的�
 
 EvaLearn 评估框架包含：
 
-1. **四种评测脚本**，覆盖不同的学习范式：
-   - `Evaluate/zero_shot.py` - 零样本评测（无上下文）
-   - `Evaluate/few_shot.py` - 少样本评测（提供示例问答对）
-   - `Evaluate/demonstration_learning.py` - 示范学习评测（累积标准答案）
-   - `Evaluate/feedback_learning.py` - 反馈学习评测（累积回答和教师评价）
-2. 问题定义数据集（`Dataset/EvaLearn_Problem.json`），**包含参考答案**
-3. 序列定义数据集（`Dataset/EvaLearn_Sequence.json`）
-4. 指标评估工具（`Evaluate/evaluate_metric.py`），用于分析结果
+1. 一个精简的序列评估工具（`Evaluate/evaluate.py`），用于处理问题序列
+2. 一个问题定义数据集（`Dataset/EvaLearn_Problem.json`）
+3. 一个序列定义数据集（`Dataset/EvaLearn_Sequence.json`）
+4. 一个用于分析结果的指标评估工具（`Evaluate/evaluate_metric.py`）
 
 ## 🚀 快速开始
 
@@ -47,60 +42,21 @@ pip install -r requirements.txt
 
 ## 🛠️ 使用方法
 
-我们提供**四种评测脚本**，对应不同的学习范式。每个脚本评估模型在不同条件下的学习能力。
-
-### 📋 评测范式
-
-| 范式 | 脚本 | 描述 |
-| ---- | ---- | ---- |
-| **零样本** | `zero_shot.py` | 模型独立回答每个问题，无任何上下文 |
-| **少样本** | `few_shot.py` | 模型在回答前获得同类型任务的示例问答对 |
-| **示范学习** | `demonstration_learning.py` | 模型累积序列中之前问题的标准答案 |
-| **反馈学习** | `feedback_learning.py` | 模型累积之前问题的自身回答和教师评价 |
-
 ### 命令行界面
 
-#### 零样本评测
-```bash
-python Evaluate/zero_shot.py --input Dataset/EvaLearn_Problem.json \
-                             --seq Dataset/EvaLearn_Sequence.json \
-                             --output results_zero_shot.json \
-                             --workers 4 \
-                             --client-api-key YOUR_CLIENT_API_KEY \
-                             --judge-api-key YOUR_JUDGE_API_KEY
-```
+运行评估：
 
-#### 少样本评测
 ```bash
-python Evaluate/few_shot.py --input Dataset/EvaLearn_Problem.json \
-                            --seq Dataset/EvaLearn_Sequence.json \
-                            --output results_few_shot.json \
-                            --workers 4 \
-                            --client-api-key YOUR_CLIENT_API_KEY \
-                            --judge-api-key YOUR_JUDGE_API_KEY
-```
-
-#### 示范学习评测
-```bash
-python Evaluate/demonstration_learning.py --input Dataset/EvaLearn_Problem.json \
-                                          --seq Dataset/EvaLearn_Sequence.json \
-                                          --output results_demonstration.json \
-                                          --workers 4 \
-                                          --client-api-key YOUR_CLIENT_API_KEY \
-                                          --judge-api-key YOUR_JUDGE_API_KEY
-```
-
-#### 反馈学习评测
-```bash
-python Evaluate/feedback_learning.py --input Dataset/EvaLearn_Problem.json \
-                                     --seq Dataset/EvaLearn_Sequence.json \
-                                     --output results_feedback.json \
-                                     --workers 4 \
-                                     --client-api-key YOUR_CLIENT_API_KEY \
-                                     --judge-api-key YOUR_JUDGE_API_KEY
+python Evaluate/evaluate.py --input Dataset/EvaLearn_Problem.json \
+                               --seq Dataset/EvaLearn_Sequence.json \
+                               --output results.json \
+                               --workers 4 \
+                               --client-api-key YOUR_CLIENT_API_KEY \
+                               --judge-api-key YOUR_JUDGE_API_KEY
 ```
 
 ### 命令行参数
+
 
 | 参数                    | 描述                                    |
 | ----------------------- | --------------------------------------- |
@@ -125,42 +81,12 @@ python Evaluate/feedback_learning.py --input Dataset/EvaLearn_Problem.json \
 ### 库使用
 
 ```python
-# 零样本评测
-from Evaluate.zero_shot import zeroShotEval
-zeroShotEval(
-    input_json_path="Dataset/EvaLearn_Problem.json",
-    seq_json_path="Dataset/EvaLearn_Sequence.json",
-    output_json_path="results_zero_shot.json",
-    client_api_key="YOUR_CLIENT_API_KEY",
-    judge_api_key="YOUR_JUDGE_API_KEY"
-)
+from Evaluate.evaluate import sequentialEval
 
-# 少样本评测
-from Evaluate.few_shot import fewShotEval
-fewShotEval(
-    input_json_path="Dataset/EvaLearn_Problem.json",
-    seq_json_path="Dataset/EvaLearn_Sequence.json",
-    output_json_path="results_few_shot.json",
-    client_api_key="YOUR_CLIENT_API_KEY",
-    judge_api_key="YOUR_JUDGE_API_KEY"
-)
-
-# 示范学习评测
-from Evaluate.demonstration_learning import demonstrationEval
-demonstrationEval(
-    input_json_path="Dataset/EvaLearn_Problem.json",
-    seq_json_path="Dataset/EvaLearn_Sequence.json",
-    output_json_path="results_demonstration.json",
-    client_api_key="YOUR_CLIENT_API_KEY",
-    judge_api_key="YOUR_JUDGE_API_KEY"
-)
-
-# 反馈学习评测
-from Evaluate.feedback_learning import sequentialEval
 sequentialEval(
     input_json_path="Dataset/EvaLearn_Problem.json",
     seq_json_path="Dataset/EvaLearn_Sequence.json",
-    output_json_path="results_feedback.json",
+    output_json_path="results.json",
     client_api_key="YOUR_CLIENT_API_KEY",
     judge_api_key="YOUR_JUDGE_API_KEY"
 )
@@ -253,11 +179,9 @@ python Evaluate/evaluate_metric.py --results my_eval_results.json --problems 7 -
 | `prompt`           | 问题文本（可以是字符串或字符串数组）       |
 | `rubric_zh`        | 判断模型使用的中文评估标准                 |
 | `rubric_en`        | 判断模型使用的英文评估标准                 |
-| `canonical_answer` | **🆕 预期的正确答案（现已公开！）**        |
+| `canonical_answer` | 预期的正确答案                             |
 
-**注意**: 
-- 我们论文中的结果使用的是中文评分标准，该标准由我们的标注团队精心标注，质量很高。英文版本是使用大语言模型翻译的，以帮助理解评分标准的含义。因此，我们**强烈建议**大家使用**中文评分标准**进行评估。我们未来也会更新为高质量的英文评分标准。
-- **🆕 参考答案现已包含在数据集中！** 这些答案可用于少样本和示范学习评测。
+**注意**: 我们论文中的结果使用的是中文评分标准，该标准由我们的标注团队精心标注，质量很高。英文版本是使用大语言模型翻译的，以帮助理解评分标准的含义。因此，我们**强烈建议**大家使用**中文评分标准**进行评估。我们未来也会更新为高质量的英文评分标准。
 
 ### 序列 JSON 格式
 
@@ -282,19 +206,12 @@ python Evaluate/evaluate_metric.py --results my_eval_results.json --problems 7 -
 
 ### 主要评估函数
 
-我们提供四个主要评估函数，对应四种学习范式：
+#### `sequentialEval`
 
-| 函数 | 脚本 | 描述 |
-| ---- | ---- | ---- |
-| `zeroShotEval` | `zero_shot.py` | 无上下文的零样本评测 |
-| `fewShotEval` | `few_shot.py` | 带示例问答对的少样本评测 |
-| `demonstrationEval` | `demonstration_learning.py` | 累积标准答案的示范学习评测 |
-| `sequentialEval` | `feedback_learning.py` | 累积回答和评价的反馈学习评测 |
-
-所有函数共享相同的参数签名：
+处理问题序列的主要评估函数，具有检查点恢复和 API 灵活性。
 
 ```python
-eval_function(
+sequentialEval(
     input_json_path,
     seq_json_path,
     output_json_path,
@@ -325,12 +242,17 @@ eval_function(
 
 ### 核心处理函数
 
-每个评测脚本包含特定范式的推理函数：
+#### `sequential_infer_and_judge`
 
-- **`zero_shot_infer_and_judge`**: 无任何上下文处理问题
-- **`few_shot_infer_and_judge`**: 使用少样本示例处理问题
-- **`demonstration_infer_and_judge`**: 使用累积标准答案处理问题
-- **`sequential_infer_and_judge`**: 使用累积反馈处理问题
+使用推理和判断处理问题序列。
+
+#### `process_sequence_batch`
+
+并行处理序列批次，具有线程安全的结果保存。
+
+#### `find_empty_responses`
+
+识别具有空响应的序列以进行重新处理。
 
 ### 实用函数
 
@@ -338,13 +260,13 @@ eval_function(
 
 处理 JSON 文件加载和保存，具有错误处理和备份机制。
 
-#### `find_empty_responses`
+#### `get_history_prompt`
 
-识别具有空响应的序列以进行重新处理。
+从之前的交互生成格式化的历史提示。
 
 ### 配置
 
-每个脚本使用 `CONFIG` 字典来配置各种参数：
+脚本使用 `CONFIG` 字典来配置各种参数：
 
 - `max_retries`: 最大 API 调用重试次数（默认：10）
 - `initial_delay`: 初始重试延迟（秒）（默认：1）
