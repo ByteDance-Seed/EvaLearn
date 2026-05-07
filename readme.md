@@ -6,7 +6,9 @@
 <h2>EvaLearn: Quantifying the Learning Capability and
 Efficiency of LLMs via Sequential Problem Solving</h2>
 
-[![Paper](https://img.shields.io/badge/Paper-Arxiv-blue.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02672)
+[![Paper](https://img.shields.io/badge/Paper-arXiv-blue.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02672)
+[![Proceedings](https://img.shields.io/badge/Proceedings-NeurIPS%202025-8A2BE2.svg?style=for-the-badge)](https://proceedings.neurips.cc/paper_files/paper/2025/hash/b7383744ec8a316f93e235a1f7f03468-Abstract-Conference.html)
+[![Venue](https://img.shields.io/badge/Venue-NeurIPS%202025-orange.svg?style=for-the-badge)](https://neurips.cc/virtual/2025/poster/115778)
 [![Code License](https://img.shields.io/badge/Code_License-Apache_2.0-yellow.svg?style=for-the-badge)](./LICENSE)
 [![Data License](https://img.shields.io/badge/Data_License-CC_BY_4.0-red.svg?style=for-the-badge)](./DATA_LICENSE)
 
@@ -14,6 +16,7 @@ Efficiency of LLMs via Sequential Problem Solving</h2>
 
 ## 📰 News
 
+- **📅 Dec 4, 2025**: EvaLearn was officially published in the [NeurIPS 2025 proceedings](https://proceedings.neurips.cc/paper_files/paper/2025/hash/b7383744ec8a316f93e235a1f7f03468-Abstract-Conference.html) and presented as a poster at NeurIPS 2025 in San Diego! 🎉
 - **📅 Sep 18, 2025**: EvaLearn was accepted to the NeurIPS 2025 main track with a high score of 5/5/5/5! 🎉
 - **📅 Jul 15, 2025**: We've released a new version! 🎉 Open-sourced complete Chinese rubrics, updated Chinese README documentation, and optimized evaluation scripts for improved efficiency and accuracy.
 - **📅 Jun 5, 2025**: EvaLearn is officially open-sourced! 🚀 We released this innovative benchmark for evaluating the learning capability and efficiency of large language models.
@@ -289,14 +292,21 @@ We gratefully acknowledge the significant contributions made by **the annotation
 We also wish to express our sincere appreciation to **an undisclosed third-party annotation company ❤️❤️** for their substantial support in data annotation.
 Finally, we would like to thank all individuals who participated in and supported this project for their valuable input.
 
-## 👋Citation
+## 👋 Citation
 
-```
-@article{dou2025evalearn,
-  title={EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving},
-  author={Dou, Shihan and Zhang, Ming and Huang, Chenhao and Chen, Jiayi and Chen, Feng and Liu, Shichun and Liu, Yan and Liu, Chenxiao and Zhong, Cheng and Zhang, Zongzhang and others},
-  journal={arXiv preprint arXiv:2506.02672},
-  year={2025}
+If you find EvaLearn helpful, please cite the official NeurIPS 2025 version:
+
+```bibtex
+@inproceedings{NEURIPS2025_b7383744,
+ author    = {Dou, Shihan and Zhang, Ming and Huang, Chenhao and Chen, Jiayi and Chen, Feng and Liu, Shichun and Liu, Yan and Liu, Chenxiao and Zhong, Cheng and Zhang, Zongzhang and Gui, Tao and Xin, Chao and Wei, Chengzhi and Yan, Lin and Zhang, Qi and Huang, Xuanjing},
+ title     = {{EvaLearn}: Quantifying the Learning Capability and Efficiency of {LLMs} via Sequential Problem Solving},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor    = {D. Belgrave and C. Zhang and H. Lin and R. Pascanu and P. Koniusz and M. Ghassemi and N. Chen},
+ pages     = {125892--125945},
+ publisher = {Curran Associates, Inc.},
+ volume    = {38},
+ year      = {2025},
+ url       = {https://proceedings.neurips.cc/paper_files/paper/2025/hash/b7383744ec8a316f93e235a1f7f03468-Abstract-Conference.html}
 }
 ```
 

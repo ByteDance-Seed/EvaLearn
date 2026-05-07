@@ -6,13 +6,16 @@
 <h2>EvaLearn: Quantifying the Learning Capability and
 Efficiency of LLMs via Sequential Problem Solving</h2>
 
-[![论文](https://img.shields.io/badge/Paper-Arxiv-blue.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02672)
+[![论文](https://img.shields.io/badge/Paper-arXiv-blue.svg?style=for-the-badge)](https://arxiv.org/abs/2506.02672)
+[![会议论文集](https://img.shields.io/badge/Proceedings-NeurIPS%202025-8A2BE2.svg?style=for-the-badge)](https://proceedings.neurips.cc/paper_files/paper/2025/hash/b7383744ec8a316f93e235a1f7f03468-Abstract-Conference.html)
+[![会议](https://img.shields.io/badge/Venue-NeurIPS%202025-orange.svg?style=for-the-badge)](https://neurips.cc/virtual/2025/poster/115778)
 [![代码许可](https://img.shields.io/badge/Code_License-Apache_2.0-yellow.svg?style=for-the-badge)](./LICENSE)
 [![数据许可](https://img.shields.io/badge/Data_License-CC_BY_4.0-red.svg?style=for-the-badge)](./DATA_LICENSE)
 
 </div>
 
 ## 📰 最新动态
+- **📅 2025年12月4日**: EvaLearn 已在 [NeurIPS 2025 会议论文集](https://proceedings.neurips.cc/paper_files/paper/2025/hash/b7383744ec8a316f93e235a1f7f03468-Abstract-Conference.html)正式出版，并作为 Poster 在 NeurIPS 2025（圣地亚哥）现场展示！🎉
 - **📅 2025年9月18日**: EvaLearn 以 5/5/5/5 的高分被 NeurIPS 2025 主会接收！🎉
 - **📅 2025年7月15日**: 我们更新了新版本！🎉 开源了完整的中文评分标准（rubric），更新了中文README文档，并优化了评测脚本，提升了评估效率和准确性。
 - **📅 2025年6月5日**: EvaLearn 正式开源！🚀 我们发布了这个创新的基准测试，用于评估大语言模型的学习能力和效率。
@@ -294,11 +297,18 @@ sequentialEval(
 
 ## 👋 引用
 
-```
-@article{dou2025evalearn,
-  title={EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving},
-  author={Dou, Shihan and Zhang, Ming and Huang, Chenhao and Chen, Jiayi and Chen, Feng and Liu, Shichun and Liu, Yan and Liu, Chenxiao and Zhong, Cheng and Zhang, Zongzhang and others},
-  journal={arXiv preprint arXiv:2506.02672},
-  year={2025}
+如果您觉得 EvaLearn 对您的研究有帮助，请引用 NeurIPS 2025 正式版本：
+
+```bibtex
+@inproceedings{NEURIPS2025_b7383744,
+ author    = {Dou, Shihan and Zhang, Ming and Huang, Chenhao and Chen, Jiayi and Chen, Feng and Liu, Shichun and Liu, Yan and Liu, Chenxiao and Zhong, Cheng and Zhang, Zongzhang and Gui, Tao and Xin, Chao and Wei, Chengzhi and Yan, Lin and Zhang, Qi and Huang, Xuanjing},
+ title     = {{EvaLearn}: Quantifying the Learning Capability and Efficiency of {LLMs} via Sequential Problem Solving},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor    = {D. Belgrave and C. Zhang and H. Lin and R. Pascanu and P. Koniusz and M. Ghassemi and N. Chen},
+ pages     = {125892--125945},
+ publisher = {Curran Associates, Inc.},
+ volume    = {38},
+ year      = {2025},
+ url       = {https://proceedings.neurips.cc/paper_files/paper/2025/hash/b7383744ec8a316f93e235a1f7f03468-Abstract-Conference.html}
 }
 ```
